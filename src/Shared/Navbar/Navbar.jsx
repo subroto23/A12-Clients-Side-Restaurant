@@ -1,5 +1,4 @@
 import { Link, NavLink } from "react-router-dom";
-import { FaUserPlus } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
 // import { GrLogin } from "react-icons/gr";
 import { IoMenuSharp } from "react-icons/io5";
@@ -36,15 +35,6 @@ const Navbar = () => {
         to="/upcomming"
       >
         Upcomming
-      </NavLink>
-      <NavLink
-        style={activeRouteStyle}
-        to="/signup"
-        className="mx-5 uppercase  hover:text-green-600 btn-gradent-swipe-l2r"
-      >
-        <span className="relative">
-          <FaUserPlus className="inline mr-1" /> Sign Up
-        </span>
       </NavLink>
       <div className="indicator">
         <NavLink
@@ -118,7 +108,12 @@ const Navbar = () => {
                   className=" menu-sm dropdown-content mt-3 z-[1] shadow rounded-lg w-52  text-white btn-toggle-style bg-green-500"
                 >
                   <li className="hover:font-semibold py-2 border-b">
-                    <button>{user?.displayName}</button>
+                    {user?.displayName}
+                  </li>
+                  <li className="hover:font-semibold py-2">
+                    <button>
+                      <Link to="dashboard/user">Dashboard</Link>
+                    </button>
                   </li>
                   <li className="hover:font-semibold py-2">
                     <button onClick={() => handleLogOut()}>
