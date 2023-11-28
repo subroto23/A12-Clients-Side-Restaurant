@@ -1,8 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
 import { FaUserPlus } from "react-icons/fa";
-import { GrLogin } from "react-icons/gr";
+import { IoIosNotifications } from "react-icons/io";
+// import { GrLogin } from "react-icons/gr";
 import { IoMenuSharp } from "react-icons/io5";
-import UseAuth from "../Hooks/UseAuth";
+import UseAuth from "../../Hookes/AuthUser/UseAuth";
+
 const Navbar = () => {
   const { user, loading, handleLogOut } = UseAuth();
   const activeRouteStyle = ({ isActive }) => {
@@ -23,58 +25,45 @@ const Navbar = () => {
       <NavLink
         style={activeRouteStyle}
         className="mx-5 hover:text-green-500 uppercase font-medium"
-        to="/all-jobs"
+        to="/meals"
       >
-        All Jobs
-      </NavLink>
-      {user && (
-        <>
-          <NavLink
-            style={activeRouteStyle}
-            className="mx-5 hover:text-green-500 uppercase font-medium"
-            to="/apply/job"
-          >
-            Applied Jobs
-          </NavLink>
-          <NavLink
-            style={activeRouteStyle}
-            className="mx-5 hover:text-green-500 uppercase font-medium"
-            to="/add-jobs"
-          >
-            Add A Job
-          </NavLink>
-          <NavLink
-            style={activeRouteStyle}
-            className="mx-5 hover:text-green-500 uppercase font-medium"
-            to="/my-jobs/post"
-          >
-            My Jobs
-          </NavLink>
-        </>
-      )}
-      <NavLink
-        style={activeRouteStyle}
-        className="mx-5 hover:text-green-500 uppercase font-medium"
-        to="/blogs"
-      >
-        Blogs
+        Meals
       </NavLink>
 
       <NavLink
         style={activeRouteStyle}
-        to="/sign-up"
-        className="mx-5 uppercase btn-gradent-swipe-l2r "
+        className="mx-5 hover:text-green-500 uppercase font-medium"
+        to="/upcomming"
       >
-        <span className="relative z-10 hover:text-white">
+        Upcomming
+      </NavLink>
+      <NavLink
+        style={activeRouteStyle}
+        to="/signup"
+        className="mx-5 uppercase  hover:text-green-600 btn-gradent-swipe-l2r"
+      >
+        <span className="relative">
           <FaUserPlus className="inline mr-1" /> Sign Up
         </span>
       </NavLink>
+      <div className="indicator">
+        <NavLink
+          style={activeRouteStyle}
+          className="mx-5 hover:text-green-500 uppercase font-medium"
+          to="/noticification"
+        >
+          <span className="text-2xl">
+            <IoIosNotifications />
+          </span>
+          <span className="indicator-item badge badge-secondary">99+</span>
+        </NavLink>
+      </div>
     </>
   );
   return (
     <>
-      <div className=" text-gray-500 shadow-md fixed top-0 z-50 w-full bg-white">
-        <div className=" navbar max-w-7xl mx-auto flex justify-between items-center">
+      <div className="  shadow-md z-10 w-full">
+        <div className="navbar mx-auto flex justify-between items-center">
           {/* Nav Logo */}
           <div>
             <div className="dropdown">
@@ -85,7 +74,7 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white rounded-box w-52"
+                className="menu menu-sm bg-green-200 dropdown-content mt-3 z-[1] space-y-4 shadow rounded-box w-52"
               >
                 {navLink}
               </ul>
@@ -96,11 +85,11 @@ const Navbar = () => {
             >
               <img
                 className="h-6 w-6 mr-2"
-                src="https://i.ibb.co/kg6zdzt/png-clipart-computer-icons-farm-garden-logo-farming-technology-food-leaf.png"
+                src="https://image.similarpng.com/very-thumbnail/2020/06/Restaurant-logo-with-chef-drawing-template-on-transparent-background-PNG.png"
                 alt=""
               />
-              <span className="text-green-500 font-semibold hover:text-gray-500">
-                JobSearch
+              <span className="text-green-500 font-semibold hover:">
+                <span className="text-lg text-red-600">M</span>eal
               </span>
             </NavLink>
           </div>
@@ -126,14 +115,12 @@ const Navbar = () => {
                 </label>
                 <ul
                   tabIndex={0}
-                  className=" menu-sm dropdown-content mt-3 z-[1]  shadow rounded-lg w-52  text-white btn-toggle-style"
+                  className=" menu-sm dropdown-content mt-3 z-[1] shadow rounded-lg w-52  text-white btn-toggle-style bg-green-500"
                 >
-                  <li className="hover:text-green-500 hover:bg-white hover:font-semibold py-2 border-b">
-                    <button>
-                      <Link>{user?.displayName}</Link>
-                    </button>
+                  <li className="hover:font-semibold py-2 border-b">
+                    <button>{user?.displayName}</button>
                   </li>
-                  <li className="hover:text-green-500 hover:bg-white hover:font-semibold py-2">
+                  <li className="hover:font-semibold py-2">
                     <button onClick={() => handleLogOut()}>
                       <Link>Logout</Link>
                     </button>
@@ -145,8 +132,8 @@ const Navbar = () => {
             <div>
               <NavLink to="/login" className="btn-gradent-swipe-r2l">
                 <span className="relative z-10">
-                  <GrLogin className="mr-2 md:inline-block hidden " />
-                  Log In
+                  {/* <GrLogin className="mr-2 md:inline-block hidden " /> */}
+                  Join Us
                 </span>
               </NavLink>
             </div>

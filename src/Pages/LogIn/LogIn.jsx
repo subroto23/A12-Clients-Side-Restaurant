@@ -3,9 +3,8 @@ import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-
-const SignUp = () => {
-  const { handleCreateUser, handleUpdateUser, handleLogOut } = UseAuth();
+const LogIn = () => {
+  const { handleLogin } = UseAuth();
   const navigate = useNavigate();
   const {
     register,
@@ -14,59 +13,33 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    const { email, password, name, photoUrl } = data;
-    handleCreateUser(email, password)
+    const { email, password } = data;
+    handleLogin(email, password)
       .then(() => {
-        handleUpdateUser(name, photoUrl).then(() => {
-          Swal.fire(`Account Created Successfully,Please Log In First`);
-          reset();
-          handleLogOut();
-          navigate("/login");
+        reset();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Successfully Logged In",
+          showConfirmButton: false,
+          timer: 1500,
         });
+        navigate(location?.state ? location.state : "/");
       })
       .catch(() => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Something went wrong!",
-          footer: "Please Try again another email",
+          text: "Login Failed!",
+          footer: "Please Try again",
         });
       });
   };
   return (
     <div>
-      <HelmetHookes title={"SignUp | Pages"} />
+      <HelmetHookes title={"Login| Pages"} />
       <div className="w-full mb-4 px-2">
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Name Section */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text">
-                Name <span className="text-red-600">*</span>
-              </span>
-            </label>
-            <input
-              type="text"
-              placeholder="Name"
-              {...register("name", {
-                required: "Name FIeld Required",
-                minLength: {
-                  value: 3,
-                  message: "Name at least 3 characters long ",
-                },
-                maxLength: {
-                  value: 20,
-                  message: "Name exceed maxLength.",
-                },
-              })}
-              className="input input-bordered w-full"
-            />
-            {errors?.name?.message && (
-              <p className="text-sm my-1 ml-2 text-red-600">
-                {errors?.name?.message}
-              </p>
-            )}
-          </div>
           {/* Email Section */}
           <div className="form-control mb-4">
             <label className="label">
@@ -132,27 +105,7 @@ const SignUp = () => {
               </p>
             )}
           </div>
-          {/* Photo Url Section */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text">
-                PhotoUrl <span className="text-red-600">*</span>
-              </span>
-            </label>
-            <input
-              type="text"
-              placeholder="https://your photo.com"
-              className="input input-bordered w-full"
-              {...register("photoUrl", {
-                required: "Photo Url is Required",
-              })}
-            />
-            {errors?.photoUrl?.message && (
-              <p className="text-sm my-1 ml-2 text-red-600">
-                {errors?.photoUrl?.message}
-              </p>
-            )}
-          </div>
+
           <div className="w-1/2 mx-auto">
             <button type="submit" className="btn btn-gost w-full">
               Create Account
@@ -164,4 +117,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default LogIn;
