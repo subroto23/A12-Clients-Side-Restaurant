@@ -112,7 +112,7 @@ const Navbar = () => {
                   </li>
                   <li className="hover:font-semibold py-2">
                     <button>
-                      <Link to="dashboard/user">Dashboard</Link>
+                      <Link to="/admin/dashboard">Dashboard</Link>
                     </button>
                   </li>
                   <li className="hover:font-semibold py-2">
