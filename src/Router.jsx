@@ -1,10 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import Root from "./Root/Root";
 import Home from "./Pages/Home/Home";
 import SignUp from "./Pages/Signup/SignUp";
 import LogIn from "./Pages/LogIn/LogIn";
 import Addmeal from "./Components/AddMeal/Addmeal";
-import Dashboard from "./Pages/AdminDashboard/Dashboard";
+import Dashboard from "./Layout/AdminDashboard/Dashboard";
+import Root from "./Layout/Root/Root";
+import ManageUsers from "./Components/ManageUsers/ManageUsers";
 
 const router = createBrowserRouter([
   {
@@ -23,14 +24,19 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LogIn />,
       },
-      ///////////////////////////////////////////////////////////////
+    ],
+  },
+  {
+    path: "/admin/dashboard",
+    element: <Dashboard />,
+    children: [
       {
-        path: "/addmeal",
+        path: "/admin/dashboard/addmeal",
         element: <Addmeal />,
       },
       {
-        path: "/admin/dashboard",
-        element: <Dashboard />,
+        path: "/admin/dashboard/users",
+        element: <ManageUsers />,
       },
     ],
   },

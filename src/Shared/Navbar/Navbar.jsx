@@ -3,6 +3,7 @@ import { IoIosNotifications } from "react-icons/io";
 // import { GrLogin } from "react-icons/gr";
 import { IoMenuSharp } from "react-icons/io5";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, loading, handleLogOut } = UseAuth();
@@ -50,6 +51,18 @@ const Navbar = () => {
       </div>
     </>
   );
+  // LogOut Handler
+  const handleLogoutUsers = async () => {
+    await handleLogOut().then(() => {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Successfully Log Out",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
+  };
   return (
     <>
       <div className="  shadow-md z-10 w-full">
@@ -110,13 +123,13 @@ const Navbar = () => {
                   <li className="hover:font-semibold py-2 border-b">
                     {user?.displayName}
                   </li>
-                  <li className="hover:font-semibold py-2">
+                  <li className="hover:font-semibold  border-b py-2">
                     <button>
                       <Link to="/admin/dashboard">Dashboard</Link>
                     </button>
                   </li>
                   <li className="hover:font-semibold py-2">
-                    <button onClick={() => handleLogOut()}>
+                    <button onClick={handleLogoutUsers}>
                       <Link>Logout</Link>
                     </button>
                   </li>

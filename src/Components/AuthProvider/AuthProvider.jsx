@@ -9,6 +9,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import auth from "../../FirebaseConfig/Config";
+import UseAxiosPublic from "../../Hookes/AxiosPublic/UseAxiosPublic";
 
 export const Authcontext = createContext(null);
 
@@ -52,18 +53,33 @@ const AuthProvider = ({ children }) => {
 
   //On auth State Change
   useEffect(() => {
-    onAuthStateChanged(auth, (CurrentUser) => {
+    const axiosPublic = UseAxiosPublic();
+    onAuthStateChanged(auth, async (CurrentUser) => {
       setLoading(true);
       if (CurrentUser) {
         setUser(CurrentUser);
-        setLoading(false);
+        await axiosPublic
+          .post("/api/users", { email: CurrentUser.email })
+          .then((res) => {
+            // Token Send TO the Localhost
+            if (res.data.token) {
+              localStorage.setItem("access_token", res.data.token);
+              setLoading(false);
+            }
+
+            //Post User
+            axiosPublic.post("/api/users/create/user", {
+              email: CurrentUser?.email,
+              name: CurrentUser?.displayName,
+            });
+          });
       } else {
         setUser(null);
+        localStorage.removeItem("access_token");
         setLoading(false);
       }
     });
   }, []);
-
   const authInfo = {
     user,
     loading,
