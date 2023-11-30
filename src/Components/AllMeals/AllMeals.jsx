@@ -2,6 +2,7 @@ import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import Swal from "sweetalert2";
 import UseAllMeals from "../../Hookes/AllMeals/UseAllMeals";
+import { Link } from "react-router-dom";
 
 const AllMeals = () => {
   const [meals, , refetch] = UseAllMeals();
@@ -63,7 +64,9 @@ const AllMeals = () => {
                     <td>{data.reviews}</td>
                     <td>
                       <button className="hover:text-black text-green-600 font-bold">
-                        Edit
+                        <Link to={`/admin/dashboard/update/${data?._id}`}>
+                          Edit
+                        </Link>
                       </button>
                     </td>
                     <td>
