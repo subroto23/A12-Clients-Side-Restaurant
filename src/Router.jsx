@@ -6,6 +6,7 @@ import Addmeal from "./Components/AddMeal/Addmeal";
 import Dashboard from "./Layout/AdminDashboard/Dashboard";
 import Root from "./Layout/Root/Root";
 import ManageUsers from "./Components/ManageUsers/ManageUsers";
+import AllMeals from "./Components/AllMeals/AllMeals";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard/users",
         element: <ManageUsers />,
+      },
+      {
+        path: "/admin/dashboard/meals",
+        element: <AllMeals />,
       },
     ],
   },

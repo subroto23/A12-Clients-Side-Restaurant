@@ -31,48 +31,50 @@ const ManageUsers = () => {
   return (
     <div>
       <HelmetHookes title={"Manage Users | Pages"}></HelmetHookes>
-      <div className="overflow-x-auto">
-        <table className="table w-full text-center">
-          {/* head */}
-          <thead>
-            <tr className="bg-orange-400 text-white text-lg text-center rounded-t rounded-b">
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((data, idx) => {
-              return (
-                <tr key={data._id}>
-                  <th>{idx + 1}</th>
-                  <td>{data.name}</td>
-                  <td>{data.email}</td>
-                  <td>
-                    <button onClick={() => handleMakeAdmin(data)}>
-                      {data?.role === "admin" ? (
-                        <>
-                          <span className="text-center font-semibold">
-                            Admin
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="bg-orange-400 md:p-2 delay-100 ease-out text-white hover:bg-gray-200  hover:text-black">
-                            Make Admin
-                          </span>
-                        </>
-                      )}
-                    </button>
-                  </td>
-                  <td>{data?.status ? data?.status : "Bronze"}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div>
+        <div className="overflow-x-auto">
+          <table className="table table-zebra w-full text-center">
+            {/* head */}
+            <thead>
+              <tr className="bg-orange-400 text-white text-lg text-center">
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((data, idx) => {
+                return (
+                  <tr key={data._id}>
+                    <th>{idx + 1}</th>
+                    <td>{data.name}</td>
+                    <td>{data.email}</td>
+                    <td>
+                      <button onClick={() => handleMakeAdmin(data)}>
+                        {data?.role === "admin" ? (
+                          <>
+                            <span className="text-center font-semibold">
+                              Admin
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="bg-orange-400 md:p-2 delay-100 ease-out text-white hover:bg-gray-200  hover:text-black">
+                              Make Admin
+                            </span>
+                          </>
+                        )}
+                      </button>
+                    </td>
+                    <td>{data?.status ? data?.status : "Bronze"}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

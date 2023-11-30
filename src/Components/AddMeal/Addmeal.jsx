@@ -56,7 +56,7 @@ const Addmeal = () => {
       createdDate: date,
       likes: 0,
       reviews: 0,
-      admin: user?.displayName,
+      distributor: user?.displayName,
       email: user?.email,
     };
     if (data.button === "meals") {

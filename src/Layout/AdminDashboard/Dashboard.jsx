@@ -65,7 +65,7 @@ const Dashboard = () => {
         </div>
       </div>
       {/* //Outlet Decleara */}
-      <div>
+      <div className="flex-1">
         Todo: DashBoard Design
         <Outlet />
       </div>
