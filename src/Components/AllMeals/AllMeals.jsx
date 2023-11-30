@@ -5,7 +5,11 @@ import UseAllMeals from "../../Hookes/AllMeals/UseAllMeals";
 import { Link } from "react-router-dom";
 
 const AllMeals = () => {
-  const [meals, , refetch] = UseAllMeals();
+  const [meals, loader, refetch] = UseAllMeals();
+  if (loader) {
+    return <span className="loading loading-spinner text-error"></span>;
+  }
+
   const AxiosSecure = UseAxiosSecure();
   //
   const handleDeleteBtn = (data) => {
@@ -21,12 +25,12 @@ const AllMeals = () => {
       if (result.isConfirmed) {
         await AxiosSecure.delete(`/api/meals/delete/${data}`).then((res) => {
           if (res.data.deletedCount > 0) {
-            refetch();
             Swal.fire({
               title: "Deleted!",
               text: "Your file has been deleted.",
               icon: "success",
             });
+            refetch();
           }
         });
       }

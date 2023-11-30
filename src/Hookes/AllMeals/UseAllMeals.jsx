@@ -8,13 +8,13 @@ const UseAllMeals = () => {
     isLoading: loader,
     refetch,
   } = useQuery({
-    queryKey: ["meals"],
+    queryKey: ["allmeals"],
     queryFn: async () => {
       const res = await AxiosPublic.get(`/api/meals`);
-      refetch();
       return res.data;
     },
   });
+  refetch();
   return [meals, loader, refetch];
 };
 
