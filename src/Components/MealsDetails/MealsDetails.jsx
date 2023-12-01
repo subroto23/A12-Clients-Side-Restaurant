@@ -35,9 +35,12 @@ const MealsDetails = () => {
 
   //Handle Like Counts
   const handleLikeCount = () => {
-    AxiosSecure.patch(`/api/meals/like/count?id=${loader._id}`, {
-      likes: loader.likes + 1,
-    }).then((res) => {
+    AxiosSecure.patch(
+      `/api/meals/like/count?id=${loader._id}&email=${user?.email}`,
+      {
+        likes: loader.likes + 1,
+      }
+    ).then((res) => {
       if (res.data.modifiedCount > 0) {
         setLike(`Loved`);
       }
@@ -59,9 +62,12 @@ const MealsDetails = () => {
 
     //Handle Reviews Count
     AxiosSecure.post("/reviews/create", postReviewsData).then(() => {
-      AxiosSecure.patch(`/api/meals/reviews/count?id=${loader._id}`, {
-        reviews: loader.reviews + 1,
-      }).then((res) => {
+      AxiosSecure.patch(
+        `/api/meals/reviews/count?id=${loader._id}&email=${user?.email}`,
+        {
+          reviews: loader.reviews + 1,
+        }
+      ).then((res) => {
         if (res.data.modifiedCount > 0) {
           setLoading(false);
           Swal.fire({

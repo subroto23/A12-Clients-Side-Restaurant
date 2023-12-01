@@ -1,16 +1,15 @@
 import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
-import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import Swal from "sweetalert2";
 import UseAllMeals from "../../Hookes/AllMeals/UseAllMeals";
 import { Link } from "react-router-dom";
+import UseAxiosPublic from "../../Hookes/AxiosPublic/UseAxiosPublic";
 
 const AllMeals = () => {
   const [meals, loader, refetch] = UseAllMeals();
   if (loader) {
     return <span className="loading loading-spinner text-error"></span>;
   }
-
-  const AxiosSecure = UseAxiosSecure();
+  const AxiosPublic = UseAxiosPublic();
   //
   const handleDeleteBtn = (data) => {
     Swal.fire({
@@ -23,7 +22,7 @@ const AllMeals = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await AxiosSecure.delete(`/api/meals/delete/${data}`).then((res) => {
+        await AxiosPublic.delete(`/api/meals/delete/${data}`).then((res) => {
           if (res.data.deletedCount > 0) {
             Swal.fire({
               title: "Deleted!",
@@ -83,7 +82,9 @@ const AllMeals = () => {
                     </td>
                     <td>
                       <button className="bg-orange-400 hover:text-black hover:bg-gray-300 p-2  text-white rounded">
-                        <Link to={`/meals/details/meal/${data?._id}`}>Details</Link>
+                        <Link to={`/meals/details/meal/${data?._id}`}>
+                          Details
+                        </Link>
                       </button>
                     </td>
                   </tr>

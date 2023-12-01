@@ -1,12 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import UseAxiosPublic from "../../Hookes/AxiosPublic/UseAxiosPublic";
+import UseAuth from "../../Hookes/AuthUser/UseAuth";
 
 const ReviewsItemsBased = ({ itemsId }) => {
   const AxiosPublic = UseAxiosPublic();
+  const { user } = UseAuth();
   const { data: reviewDatas = [], refetch } = useQuery({
     queryKey: ["reviewsArrays"],
     queryFn: async () => {
-      const res = await AxiosPublic.get(`/reviews?id=${itemsId}`);
+      const res = await AxiosPublic.get(
+        `/reviews?id=${itemsId}&email=${user?.email}`
+      );
       return res.data;
     },
   });
