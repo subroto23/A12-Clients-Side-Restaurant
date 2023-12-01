@@ -9,6 +9,7 @@ import ManageUsers from "./Components/ManageUsers/ManageUsers";
 import AllMeals from "./Components/AllMeals/AllMeals";
 import UpdateMeals from "./Components/UpdateMeals/UpdateMeals";
 import MealsDetails from "./Components/MealsDetails/MealsDetails";
+import AllReviews from "./Components/AllReviews/AllReviews";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
         element: <UpdateMeals />,
         loader: ({ params }) =>
           fetch(`http://localhost:5001/api/meals/${params.id}`),
+      },
+      {
+        path: "/admin/dashboard/reviews",
+        element: <AllReviews />,
       },
     ],
   },

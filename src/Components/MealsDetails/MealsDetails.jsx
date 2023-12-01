@@ -6,6 +6,7 @@ import { useState } from "react";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import Swal from "sweetalert2";
 import ReviewsItemsBased from "../ReviewsItemsBased/ReviewsItemsBased";
+import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
 
 const MealsDetails = () => {
   const loader = useLoaderData();
@@ -61,7 +62,10 @@ const MealsDetails = () => {
     };
 
     //Handle Reviews Count
-    AxiosSecure.post("/reviews/create", postReviewsData).then(() => {
+    AxiosSecure.post(
+      `/reviews/create?email=${user?.email}`,
+      postReviewsData
+    ).then(() => {
       AxiosSecure.patch(
         `/api/meals/reviews/count?id=${loader._id}&email=${user?.email}`,
         {
@@ -85,6 +89,7 @@ const MealsDetails = () => {
 
   return (
     <div>
+      <HelmetHookes title={loader?.title}></HelmetHookes>
       <div className="flex md:flex-row flex-col md:gap-x-8">
         <div className="py-2 md:w-1/2">
           <div className="relative h-full">
