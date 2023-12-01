@@ -10,6 +10,7 @@ import AllMeals from "./Components/AllMeals/AllMeals";
 import UpdateMeals from "./Components/UpdateMeals/UpdateMeals";
 import MealsDetails from "./Components/MealsDetails/MealsDetails";
 import AllReviews from "./Components/AllReviews/AllReviews";
+import UpCommingMeals from "./Components/UpCommingMeals/UpCommingMeals";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard/reviews",
         element: <AllReviews />,
+      },
+      {
+        path: "/admin/dashboard/upcomming",
+        element: <UpCommingMeals />,
       },
     ],
   },
