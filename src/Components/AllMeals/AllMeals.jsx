@@ -83,7 +83,7 @@ const AllMeals = () => {
                     </td>
                     <td>
                       <button className="bg-orange-400 hover:text-black hover:bg-gray-300 p-2  text-white rounded">
-                        Details
+                        <Link to={`/meals/details/meal/${data?._id}`}>Details</Link>
                       </button>
                     </td>
                   </tr>

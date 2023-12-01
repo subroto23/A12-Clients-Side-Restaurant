@@ -4,7 +4,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useForm } from "react-hook-form";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
-import axios from "axios";
+// import axios from "axios";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import Swal from "sweetalert2";
 import { useLoaderData } from "react-router-dom";
@@ -31,25 +31,24 @@ const UpdateMeals = () => {
     toolbar: toolbarOptions,
   };
 
-  //Image Hosting
-  const imageHostingApi = import.meta.env.VITE_IMAGE_HOSTING_API_KEY;
-  const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${imageHostingApi}`;
+  // //Image Hosting
+  // const imageHostingApi = import.meta.env.VITE_IMAGE_HOSTING_API_KEY;
+  // const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${imageHostingApi}`;
 
   //Events Handler
   const onSubmit = async (data) => {
     setLoader(true);
-    const { price, rating, title, type, image } = data;
-    const imageFile = { image: image[0] };
-    const res = await axios.post(imageHostingUrl, imageFile, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { price, rating, title, type } = data;
+    // const imageFile = { image: image[0] };
+    // const res = await axios.post(imageHostingUrl, imageFile, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    // });
     //Creating Object
     const addMealsFormValue = {
       title,
       type,
-      imageUrl: res?.data?.data?.display_url,
       Ingredients,
       details,
       price,
@@ -170,7 +169,7 @@ const UpdateMeals = () => {
               </div>
 
               {/* Meal Image */}
-              <div>
+              {/* <div>
                 <label
                   className="text-gray-700 dark:text-gray-200"
                   htmlFor="mealImage"
@@ -180,10 +179,10 @@ const UpdateMeals = () => {
                 <input
                   name="image"
                   type="file"
-                  {...register("image", { required: true })}
+                  {...register("image")}
                   className="block w-full file-input px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-400 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
-              </div>
+              </div> */}
 
               {/* Ingredient Section */}
               <div className="md:col-span-2">

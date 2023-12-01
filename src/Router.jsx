@@ -8,6 +8,7 @@ import Root from "./Layout/Root/Root";
 import ManageUsers from "./Components/ManageUsers/ManageUsers";
 import AllMeals from "./Components/AllMeals/AllMeals";
 import UpdateMeals from "./Components/UpdateMeals/UpdateMeals";
+import MealsDetails from "./Components/MealsDetails/MealsDetails";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,12 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LogIn />,
+      },
+      {
+        path: "/meals/details/meal/:id",
+        element: <MealsDetails />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5001/api/meals/${params.id}`),
       },
     ],
   },
