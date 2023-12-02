@@ -4,9 +4,11 @@ import { IoIosNotifications } from "react-icons/io";
 import { IoMenuSharp } from "react-icons/io5";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import Swal from "sweetalert2";
+import UseAdmin from "../../Hookes/AdminVerify/UseAdmin";
 
 const Navbar = () => {
   const { user, loading, handleLogOut } = UseAuth();
+  const [isAdmin, adminLoading] = UseAdmin();
   const activeRouteStyle = ({ isActive }) => {
     return {
       color: isActive ? "#2ecc71" : "",
@@ -123,11 +125,22 @@ const Navbar = () => {
                   <li className="hover:font-semibold py-2 border-b">
                     {user?.displayName}
                   </li>
-                  <li className="hover:font-semibold  border-b py-2">
-                    <button>
-                      <Link to="/admin/dashboard">Dashboard</Link>
-                    </button>
-                  </li>
+                  {user && isAdmin && !adminLoading && (
+                    <li className="hover:font-semibold  border-b py-2">
+                      <button>
+                        <Link to="/admin/dashboard">Dashboard</Link>
+                      </button>
+                    </li>
+                  )}
+                  {user && !isAdmin && (
+                    <>
+                      <li className="hover:font-semibold  border-b py-2">
+                        <button>
+                          <Link to="/dashboard">Dashboard User</Link>
+                        </button>
+                      </li>
+                    </>
+                  )}
                   <li className="hover:font-semibold py-2">
                     <button onClick={handleLogoutUsers}>
                       <Link>Logout</Link>

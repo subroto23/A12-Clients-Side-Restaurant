@@ -54,30 +54,32 @@ const AuthProvider = ({ children }) => {
   const axiosPublic = UseAxiosPublic();
   //On auth State Change
   useEffect(() => {
-    setLoading(true);
-    onAuthStateChanged(auth, async (CurrentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (CurrentUser) => {
       if (CurrentUser) {
         setUser(CurrentUser);
-        setLoading(false);
         await axiosPublic
           .post("/api/users", { email: CurrentUser.email })
           .then(async (res) => {
             // Token Send TO the Localhost
-            if (res.data.token) {
+            if (res.data?.token) {
               localStorage.setItem("access_token", res.data.token);
+              setLoading(false);
             }
             //Post User
             await axiosPublic.post("/api/users/create/user", {
               email: CurrentUser?.email,
               name: CurrentUser?.displayName,
             });
+            setLoading(false);
           });
       } else {
-        setUser(null);
         localStorage.removeItem("access_token");
         setLoading(false);
       }
     });
+    return () => {
+      return unsubscribe();
+    };
   }, [axiosPublic]);
   const authInfo = {
     user,

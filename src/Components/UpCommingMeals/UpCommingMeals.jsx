@@ -26,9 +26,16 @@ const UpCommingMeals = () => {
                     <td>{data.title}</td>
                     <td>{data.likes.length}</td>
                     <td>
-                      <button className="hover:text-black text-green-600 font-bold">
-                        Publish
-                      </button>
+                      {data?.likes >= 10 ? (
+                        <>
+                          {" "}
+                          <button className="hover:text-black text-green-600 font-bold">
+                            Add Meals
+                          </button>
+                        </>
+                      ) : (
+                        <>Publish</>
+                      )}
                     </td>
                   </tr>
                 );

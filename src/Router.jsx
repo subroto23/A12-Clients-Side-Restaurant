@@ -11,6 +11,7 @@ import UpdateMeals from "./Components/UpdateMeals/UpdateMeals";
 import MealsDetails from "./Components/MealsDetails/MealsDetails";
 import AllReviews from "./Components/AllReviews/AllReviews";
 import UpCommingMeals from "./Components/UpCommingMeals/UpCommingMeals";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/meals/details/meal/:id",
-        element: <MealsDetails />,
+        element: (
+          <PrivateRoute>
+            <MealsDetails />
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5001/api/meals/${params.id}`),
       },

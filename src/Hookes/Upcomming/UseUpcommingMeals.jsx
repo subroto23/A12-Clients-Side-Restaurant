@@ -12,7 +12,7 @@ const UseUpcommingMeals = () => {
   } = useQuery({
     queryKey: ["upcommingDatas"],
     queryFn: async () => {
-      const res = await AxiosPublic.get(`/api/upcomming/${user.email}`);
+      const res = await AxiosPublic.get(`/api/upcomming/${user?.email}`);
       return res.data;
     },
   });
