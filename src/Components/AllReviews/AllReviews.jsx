@@ -4,11 +4,13 @@ import UseAllMeals from "../../Hookes/AllMeals/UseAllMeals";
 import Swal from "sweetalert2";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
+import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
 
 const AllReviews = () => {
   const [meals, , refetch] = UseAllMeals();
   const AxiosSecure = UseAxiosSecure();
   const { user } = UseAuth();
+  const SectionTitle = UseSectionTitle("Meals", "Review");
   //
   const handleDeleteBtn = (data, reviews) => {
     Swal.fire({
@@ -44,8 +46,9 @@ const AllReviews = () => {
   return (
     <div>
       <HelmetHookes title={"All Reviews || Admin pages"}></HelmetHookes>
+      {SectionTitle}
       <div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-[3%]">
           <table className="table table-zebra w-full text-center">
             {/* head */}
             <thead>

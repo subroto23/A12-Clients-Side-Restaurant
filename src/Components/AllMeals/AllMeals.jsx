@@ -3,9 +3,11 @@ import Swal from "sweetalert2";
 import UseAllMeals from "../../Hookes/AllMeals/UseAllMeals";
 import { Link } from "react-router-dom";
 import UseAxiosPublic from "../../Hookes/AxiosPublic/UseAxiosPublic";
+import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
 
 const AllMeals = () => {
   const [meals, loader, refetch] = UseAllMeals();
+  const SectionTitle = UseSectionTitle("All Posted", "Meals");
   if (loader) {
     return <span className="loading loading-spinner text-error"></span>;
   }
@@ -38,12 +40,13 @@ const AllMeals = () => {
   return (
     <div>
       <HelmetHookes title={"All Meals || pages"}></HelmetHookes>
+      {SectionTitle}
       <div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-[3%]">
           <table className="table table-zebra w-full text-center">
             {/* head */}
             <thead>
-              <tr className="bg-orange-400 text-white  text-center">
+              <tr className="bg-orange-400 text-white text-center">
                 <th>#</th>
                 <th>Distributor Email</th>
                 <th>Distributor Name</th>

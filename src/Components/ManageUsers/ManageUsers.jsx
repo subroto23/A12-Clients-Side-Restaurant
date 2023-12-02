@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
 import Swal from "sweetalert2";
+import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
 
 const ManageUsers = () => {
   const axiosPrivate = UseAxiosSecure();
+  const SectionTitle = UseSectionTitle("Manage", "Users");
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
@@ -31,8 +33,9 @@ const ManageUsers = () => {
   return (
     <div>
       <HelmetHookes title={"Manage Users | Pages"}></HelmetHookes>
+      {SectionTitle}
       <div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-[3%]">
           <table className="table table-zebra w-full text-center">
             {/* head */}
             <thead>

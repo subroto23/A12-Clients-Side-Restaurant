@@ -7,6 +7,7 @@ import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import axios from "axios";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import Swal from "sweetalert2";
+import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
 
 const Addmeal = () => {
   const [loader, setLoader] = useState(false);
@@ -16,7 +17,7 @@ const Addmeal = () => {
   const { user } = UseAuth();
   const { handleSubmit, register, setValue, reset } = useForm();
   const axiosSecureUrl = UseAxiosSecure();
-
+  const SectionTitle = UseSectionTitle("Post Your", "Meal");
   //Customize Toolbar
   const toolbarOptions = [
     { list: "ordered" },
@@ -120,8 +121,9 @@ const Addmeal = () => {
   return (
     <div>
       <HelmetHookes title={"Add Meal | pages"}></HelmetHookes>
+      {SectionTitle}
       <section className="max-w-4xl p-6 mx-auto bg-white rounded-md dark:bg-gray-800">
-        <div className="my-8 mx-auto max-w-6xl border-2 md:p-8 shadow-xl border-green-500">
+        <div className="my-8 mx-auto max-w-6xl border-2 md:p-8 shadow-xl border-orange-400">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 md:px-2 px-4 py-4 gap-8 space-y-4 ">
               {/* Meal Type */}
@@ -264,7 +266,7 @@ const Addmeal = () => {
                   setValue("button", "meals");
                   handleSubmit(onSubmit)();
                 }}
-                className="btn btn-primary btn-toggle-style focus:outline-none focus:bg-gray-600 text-center flex"
+                className="btn bg-orange-400 text-white hover:text-black  btn-toggle-style focus:outline-none focus:bg-gray-600 text-center flex"
               >
                 {loader && (
                   <span className="loading loading-spinner loading-md mr-2"></span>
@@ -279,7 +281,7 @@ const Addmeal = () => {
                   setValue("button", "upcomming");
                   handleSubmit(onSubmit)();
                 }}
-                className="btn btn-primary btn-toggle-style focus:outline-none focus:bg-gray-600 text-center flex"
+                className="btn bg-orange-400 text-white hover:text-black mb-4 btn-toggle-style focus:outline-none focus:bg-gray-600 text-center flex"
               >
                 {loader2 && (
                   <span className="loading loading-spinner loading-md mr-2"></span>

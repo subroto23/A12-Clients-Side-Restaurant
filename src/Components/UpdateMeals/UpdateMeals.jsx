@@ -8,6 +8,7 @@ import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import Swal from "sweetalert2";
 import { useLoaderData } from "react-router-dom";
+import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
 
 const UpdateMeals = () => {
   const [loader, setLoader] = useState(false);
@@ -16,6 +17,7 @@ const UpdateMeals = () => {
   const { user } = UseAuth();
   const { handleSubmit, register, reset } = useForm();
   const axiosSecureUrl = UseAxiosSecure();
+  const SectionTitle = UseSectionTitle("Update", "Meals");
 
   const payloader = useLoaderData();
   //Customize Toolbar
@@ -31,21 +33,10 @@ const UpdateMeals = () => {
     toolbar: toolbarOptions,
   };
 
-  // //Image Hosting
-  // const imageHostingApi = import.meta.env.VITE_IMAGE_HOSTING_API_KEY;
-  // const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${imageHostingApi}`;
-
   //Events Handler
   const onSubmit = async (data) => {
     setLoader(true);
     const { price, rating, title, type } = data;
-    // const imageFile = { image: image[0] };
-    // const res = await axios.post(imageHostingUrl, imageFile, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   },
-    // });
-    //Creating Object
     const addMealsFormValue = {
       title,
       type,
@@ -85,8 +76,9 @@ const UpdateMeals = () => {
   return (
     <div>
       <HelmetHookes title={"Update Meal | pages"}></HelmetHookes>
+      {SectionTitle}
       <section className="max-w-4xl p-6 mx-auto bg-white rounded-md dark:bg-gray-800">
-        <div className="my-8 mx-auto max-w-6xl border-2 md:p-8 shadow-xl border-green-500">
+        <div className="my-8 mx-auto max-w-6xl border-2 md:p-8 shadow-xl border-orange-400">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 md:px-2 px-4 py-4 gap-8 space-y-4 ">
               {/* Meal Type */}

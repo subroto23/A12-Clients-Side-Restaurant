@@ -1,13 +1,16 @@
 import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
+import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
 import UseUpcommingMeals from "../../Hookes/Upcomming/UseUpcommingMeals";
 
 const UpCommingMeals = () => {
   const [upcommingMeals] = UseUpcommingMeals();
+  const SectionTitle = UseSectionTitle("Upcomming", "Meals");
   return (
     <div>
       <HelmetHookes title={"Upcomming Meals || pages"}></HelmetHookes>
+      {SectionTitle}
       <div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-[3%]">
           <table className="table table-zebra w-full text-center">
             {/* head */}
             <thead>
