@@ -1,10 +1,22 @@
+import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import UseUpcommingMeals from "../../Hookes/Upcomming/UseUpcommingMeals";
+import UseAuth from "../../Hookes/AuthUser/UseAuth";
 
 const Upcomming = () => {
-  const [upcommingMeals, loader] = UseUpcommingMeals();
+  const [upcommingMeals, loader, refetch] = UseUpcommingMeals();
+  const { user } = UseAuth();
+  const AxiosSecure = UseAxiosSecure();
   if (loader) {
     return <span className="loading loading-dots loading-lg"></span>;
   }
+  const handleClicked = (data) => {
+    //Handle Like Counts
+    AxiosSecure.patch(`/api/upcomming/meal/likes/count?id=${data?._id}`, {
+      email: user?.email,
+    }).then(() => {
+      refetch();
+    });
+  };
   return (
     <div className="grid md:grid-cols-3 grid-cols-1 gap-8">
       {upcommingMeals.map((data) => {
@@ -43,9 +55,24 @@ const Upcomming = () => {
                     ></div>
                   </div>
                   <div className="text-right mt-1">
-                    <button className="bg-orange-400 px-4 py-2 text-2xl font-semibold text-white rounded-md hover:bg-gray-400 hover:text-black">
-                      Like
-                    </button>
+                    {data?.likes.includes(user?.email) ? (
+                      <>
+                        <button
+                          onClick={() => handleClicked(data)}
+                          disabled={true}
+                          className="bg-orange-200 px-4 py-2 text-2xl font-semibold text-white rounded-md"
+                        >
+                          Liked
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        onClick={() => handleClicked(data)}
+                        className="bg-orange-400 px-4 py-2 text-2xl font-semibold text-white rounded-md hover:bg-gray-400 hover:text-black"
+                      >
+                        Likes
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

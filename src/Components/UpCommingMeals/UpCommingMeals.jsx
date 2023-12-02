@@ -24,7 +24,7 @@ const UpCommingMeals = () => {
                   <tr key={data._id}>
                     <th>{idx + 1}</th>
                     <td>{data.title}</td>
-                    <td>{data.likes}</td>
+                    <td>{data.likes.length}</td>
                     <td>
                       <button className="hover:text-black text-green-600 font-bold">
                         Publish
