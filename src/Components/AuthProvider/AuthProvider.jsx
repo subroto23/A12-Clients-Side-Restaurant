@@ -54,6 +54,7 @@ const AuthProvider = ({ children }) => {
   const axiosPublic = UseAxiosPublic();
   //On auth State Change
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (CurrentUser) => {
       if (CurrentUser) {
         setUser(CurrentUser);

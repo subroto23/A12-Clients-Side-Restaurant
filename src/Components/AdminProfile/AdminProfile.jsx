@@ -1,18 +1,25 @@
+import UseAllMeals from "../../Hookes/AllMeals/UseAllMeals";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
+import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
 import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
 
 const AdminProfile = () => {
   const { user } = UseAuth();
+  const [meals] = UseAllMeals();
+  const filter = meals.filter((data) => data.email === user?.email);
   const SectionTitle = UseSectionTitle("Your", "Profile");
   return (
     <div>
+      <HelmetHookes
+        title={`${user?.displayName} Profile || Pages`}
+      ></HelmetHookes>
       {SectionTitle}
       <div className="flex font-medium items-center justify-center h-full">
         <section className="lg:w-2/6 w-full mx-auto bg-orange-700 rounded-2xl px-8 py-6 shadow-lg">
           <div className="flex items-center justify-between">
-            <span className="text-gray-400 text-sm flex items-center">
+            <span className="text-white text-sm flex items-center">
               <span className="loading loading-ring text-green-600 loading-md ml-2"></span>
-              Active Now
+              Active
             </span>
             <span className="text-emerald-400">
               <svg
@@ -50,7 +57,11 @@ const AdminProfile = () => {
             <div className="h-1 rounded-full w-2/5 bg-yellow-500 "></div>
           </div>
           <div className="mt-3 text-white text-sm">
-            <span className="text-gray-400 font-semibold"></span>
+            <span className="text-gray-400 font-semibold">
+              Added
+              <span className="mx-2 text-green-400">{filter.length} </span>
+              Meals
+            </span>
           </div>
         </section>
       </div>

@@ -55,7 +55,7 @@ const Addmeal = () => {
       price,
       rating,
       createdDate: date,
-      likes: [],
+      likes: 0,
       reviews: 0,
       distributor: user?.displayName,
       email: user?.email,
