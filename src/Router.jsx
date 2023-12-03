@@ -16,6 +16,8 @@ import AdminRoute from "./Components/AdminRoute/AdminRoute";
 import AdminDashBoard from "./Layout/AdminDashboard/AdminDashBoard";
 import AdminProfile from "./Components/AdminProfile/AdminProfile";
 import ErrorPage from "./Components/ErrorPages/ErrorPages";
+import TabSystemCatagory from "./Pages/Home/TabSystem/TabSystemCatagory";
+import Upcomming from "./Components/Upcomming/Upcomming";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LogIn />,
+      },
+      {
+        path: "/meals",
+        element: <TabSystemCatagory />,
+      },
+      {
+        path: "/upcomming",
+        element: <Upcomming />,
       },
       {
         path: "/meals/details/meal/:id",

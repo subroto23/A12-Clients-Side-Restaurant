@@ -5,13 +5,33 @@ import { IoMenuSharp } from "react-icons/io5";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import Swal from "sweetalert2";
 import UseAdmin from "../../Hookes/AdminVerify/UseAdmin";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { user, loading, handleLogOut } = UseAuth();
   const [isAdmin, adminLoading] = UseAdmin();
+  const [stickyClass, setStickyClass] = useState("");
+
+  useEffect(() => {
+    window.addEventListener("scroll", stickNavbar);
+    return () => window.removeEventListener("scroll", stickNavbar);
+  }, []);
+  const stickNavbar = () => {
+    if (window !== undefined) {
+      let windowHeight = window.scrollY;
+      // window height changed for the demo
+      windowHeight > 50
+        ? setStickyClass(
+            `fixed top-0 transition bg-orange-400 bg-opacity-100 duration-1000 ease-in-out`
+          )
+        : setStickyClass("");
+    }
+  };
+
+  //Navlik Active Class
   const activeRouteStyle = ({ isActive }) => {
     return {
-      color: isActive ? "#FFA500" : "",
+      color: isActive ? "#C3FCF1" : "",
       fontWeight: isActive ? "bold" : "",
     };
   };
@@ -69,8 +89,10 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="z-10 w-full">
-        <div className="navbar mx-auto flex justify-between items-center">
+      <div
+        className={`z-50 bg-black bg-opacity-80 max-w-screen-xl top-0 mx-auto w-full text-white ${stickyClass}`}
+      >
+        <div className={`navbar mx-auto flex justify-between items-center`}>
           {/* Nav Logo */}
           <div>
             <div className="dropdown">
@@ -95,8 +117,8 @@ const Navbar = () => {
                 src="https://image.similarpng.com/very-thumbnail/2020/06/Restaurant-logo-with-chef-drawing-template-on-transparent-background-PNG.png"
                 alt=""
               />
-              <span className="text-orange-400 font-semibold hover:">
-                <span className="text-lg text-green-600">IU</span>meal
+              <span className="text-white font-semibold hover:">
+                <span className="text-lg text-blue-700">IU</span>meal
               </span>
             </NavLink>
           </div>

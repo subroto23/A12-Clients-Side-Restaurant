@@ -28,7 +28,7 @@ const Upcomming = () => {
   return (
     <div>
       {SectionTitle}
-      <div className="grid md:grid-cols-3 grid-cols-1 gap-8">
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-8 mb-6">
         {upcommingMeals.map((data) => {
           return (
             <div
