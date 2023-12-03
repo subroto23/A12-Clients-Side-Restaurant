@@ -11,7 +11,7 @@ const Navbar = () => {
   const [isAdmin, adminLoading] = UseAdmin();
   const activeRouteStyle = ({ isActive }) => {
     return {
-      color: isActive ? "#2ecc71" : "",
+      color: isActive ? "#FFA500" : "",
       fontWeight: isActive ? "bold" : "",
     };
   };
@@ -19,14 +19,14 @@ const Navbar = () => {
     <>
       <NavLink
         style={activeRouteStyle}
-        className="mx-5 hover:text-green-500 uppercase font-medium"
+        className="mx-5 hover:text-orange-700 uppercase font-medium"
         to="/"
       >
         Home
       </NavLink>
       <NavLink
         style={activeRouteStyle}
-        className="mx-5 hover:text-green-500 uppercase font-medium"
+        className="mx-5 hover:text-orange-700 uppercase font-medium"
         to="/meals"
       >
         Meals
@@ -34,7 +34,7 @@ const Navbar = () => {
 
       <NavLink
         style={activeRouteStyle}
-        className="mx-5 hover:text-green-500 uppercase font-medium"
+        className="mx-5 hover:text-orange-700 uppercase font-medium"
         to="/upcomming"
       >
         Upcomming
@@ -42,13 +42,15 @@ const Navbar = () => {
       <div className="indicator">
         <NavLink
           style={activeRouteStyle}
-          className="mx-5 hover:text-green-500 uppercase font-medium"
+          className="mx-5 hover:text-orange-700 uppercase font-medium"
           to="/noticification"
         >
           <span className="text-2xl">
             <IoIosNotifications />
           </span>
-          <span className="indicator-item badge badge-secondary">99+</span>
+          <span className="indicator-item badge bg-orange-200 text-black">
+            99+
+          </span>
         </NavLink>
       </div>
     </>
@@ -67,7 +69,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="  shadow-md z-10 w-full">
+      <div className="z-10 w-full">
         <div className="navbar mx-auto flex justify-between items-center">
           {/* Nav Logo */}
           <div>
@@ -93,8 +95,8 @@ const Navbar = () => {
                 src="https://image.similarpng.com/very-thumbnail/2020/06/Restaurant-logo-with-chef-drawing-template-on-transparent-background-PNG.png"
                 alt=""
               />
-              <span className="text-green-500 font-semibold hover:">
-                <span className="text-lg text-red-600">M</span>eal
+              <span className="text-orange-400 font-semibold hover:">
+                <span className="text-lg text-green-600">IU</span>meal
               </span>
             </NavLink>
           </div>

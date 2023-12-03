@@ -23,7 +23,7 @@ const GoogleLogin = () => {
     <>
       <button
         onClick={handleGoogleUsers}
-        className="mb-2.5 btn-gradent-swipe-l2r flex items-center text-sm md:text-lg  py-3 px-7 rounded-md  font-semibold uppercase tracking-wider text-green-500 border md:w-1/3"
+        className="mb-2.5 btn-gradent-swipe-l2r flex items-center text-sm md:text-lg  py-3 px-7 rounded-md hover:bg-orange-400 hover:text-white font-semibold uppercase tracking-wider text-orange-400 border md:w-1/2"
       >
         <svg
           role="img"
