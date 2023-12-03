@@ -31,13 +31,16 @@ const Upcomming = () => {
       <div className="grid md:grid-cols-3 grid-cols-1 gap-8">
         {upcommingMeals.map((data) => {
           return (
-            <div key={data._id} className="flex justify-center px-2">
+            <div
+              key={data._id}
+              className="flex justify-center px-2 hover:shadow-lg hover:shadow-orange-400 transform duration-500 group"
+            >
               <div className="w-full max-w-md mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
                 <div className="max-w-md mx-auto">
                   <div className="relative">
                     <img
                       src={data?.imageUrl}
-                      className="w-full md:h-[250px] object-cover  hover:skew-y-2 duration-75"
+                      className="w-full md:h-[250px] object-cover group-hover:scale-110 transition duration-500"
                       alt=""
                     />
                     <div>
@@ -47,7 +50,7 @@ const Upcomming = () => {
                     </div>
                   </div>
                   <div className="p-4 sm:p-6">
-                    <p className="font-bold text-gray-700 text-[22px] leading-7 mb-1">
+                    <p className="font-bold group-hover:text-orange-400 text-gray-700 text-[22px] leading-7 mb-1">
                       {data.title}
                     </p>
                     <div className="flex flex-row">
@@ -58,7 +61,7 @@ const Upcomming = () => {
                         {data.price}
                       </p>
                     </div>
-                    <div className="text-justify text-gray-300 leading-normal">
+                    <div className="text-justify group-hover:font-semibold text-gray-300 leading-normal">
                       <div
                         dangerouslySetInnerHTML={{ __html: data.Ingredients }}
                         className="text-[#7C7C80] font-[15px] mt-6"
