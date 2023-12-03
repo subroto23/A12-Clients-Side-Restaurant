@@ -13,7 +13,7 @@ const Carosal = () => {
         <h1 className="px-4 text-2xl sm:text-sm md:text-3xl lg:text-4xl font-bold">
           {title}
         </h1>
-        <h1 className="px-4 md:text-xl text-xs font-bold md:mt-6 mt-2 text-center">
+        <h1 className="px-4 md:text-xl text-orange-400 text-xs font-bold md:mt-6 mt-2 text-center">
           <span>{subtitle}</span>
         </h1>
         {/* Form Group start*/}
@@ -74,7 +74,12 @@ const Carosal = () => {
   );
   return (
     <div>
-      <Carousel autoPlay={true} infiniteLoop={true}>
+      <Carousel
+        autoPlay={true}
+        infiniteLoop={true}
+        showThumbs={false}
+        className="border-b-8 border-orange-400"
+      >
         <div className="relative">
           <img src="https://i.ytimg.com/vi/TLGb8Cxx9Jc/maxresdefault.jpg" />
           {OverLay("Fuska", "Flavor Explosion")}

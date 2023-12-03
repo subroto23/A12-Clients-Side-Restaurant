@@ -7,10 +7,12 @@ import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import Swal from "sweetalert2";
 import ReviewsItemsBased from "../ReviewsItemsBased/ReviewsItemsBased";
 import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
+import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
 
 const MealsDetails = () => {
   const loader = useLoaderData();
   const AxiosSecure = UseAxiosSecure();
+  const SectionTitle = UseSectionTitle("Meal", "Details");
   const { user } = UseAuth();
   const [like, setLike] = useState("Like");
   const [loading, setLoading] = useState(false);
@@ -90,6 +92,7 @@ const MealsDetails = () => {
   return (
     <div>
       <HelmetHookes title={loader?.title}></HelmetHookes>
+      {SectionTitle}
       <div className="flex md:flex-row flex-col md:gap-x-8">
         <div className="py-2 md:w-1/2">
           <div className="relative h-full">
@@ -207,9 +210,11 @@ const MealsDetails = () => {
         </div>
       </div>
       <div className="my-6">
-        <h1 className="text-4xl text-center text-orange-400 text md:mt-20 my-8 font-semibold">
-          Our Clients Reviews
-        </h1>
+        {loader.reviews ? (
+          <h1 className="text-4xl text-orange-400 text md:mt-20 my-8 font-semibold">
+            Our Clients Reviews
+          </h1>
+        ) : null}
         <ReviewsItemsBased itemsId={loader._id} />
       </div>
     </div>
