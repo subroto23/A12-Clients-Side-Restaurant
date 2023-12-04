@@ -17,14 +17,14 @@ const CheckoutForm = ({ data }) => {
   const SectionTitle = UseSectionTitle("Payment Your", "Order");
   //
   useEffect(() => {
-    AxiosSecure.post("/payment/create").then((res) =>
+    AxiosSecure.post("/payment/create", { price: 2200 }).then((res) =>
       setClientSecret(res.data.clientSecret)
     );
   }, [AxiosSecure]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e.target);
+
     if (!stripe || !elements) {
       return;
     }
@@ -32,7 +32,7 @@ const CheckoutForm = ({ data }) => {
     // Get a reference to a mounted CardElement. Elements knows how
     // to find your CardElement because there can only ever be one of
     // each type of element.
-    const card = elements.getElement("2200");
+    const card = elements.getElement(CardElement);
 
     if (card == null) {
       return;
@@ -80,7 +80,6 @@ const CheckoutForm = ({ data }) => {
       }
     }
   };
-
   return (
     <div>
       {SectionTitle}
