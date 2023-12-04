@@ -18,6 +18,7 @@ import AdminProfile from "./Components/AdminProfile/AdminProfile";
 import ErrorPage from "./Components/ErrorPages/ErrorPages";
 import TabSystemCatagory from "./Pages/Home/TabSystem/TabSystemCatagory";
 import Upcomming from "./Components/Upcomming/Upcomming";
+import Payment from "./Components/Payment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,15 @@ const router = createBrowserRouter([
       {
         path: "/upcomming",
         element: <Upcomming />,
+      },
+      {
+        path: "/payment/:name",
+        element: (
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) => params?.name,
       },
       {
         path: "/meals/details/meal/:id",

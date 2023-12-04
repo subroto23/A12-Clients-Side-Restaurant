@@ -1,10 +1,8 @@
+import { Link } from "react-router-dom";
 import UseSectionTitle from "../../../Hookes/SectionTitle/UseSectionTitle";
 import { TbCurrencyTaka } from "react-icons/tb";
 const Subscribtion = () => {
   const SectionTitle = UseSectionTitle("Upgrade", "Premium", "md:mt-28");
-  const handlePremiumBtn = (data) => {
-    console.log(data);
-  };
   return (
     <div>
       {SectionTitle}
@@ -71,12 +69,11 @@ const Subscribtion = () => {
               </ul>
             </div>
             <div className="flex px-10 pb-10 justfy-center">
-              <button
-                onClick={() => handlePremiumBtn("Silver")}
-                className="flex items-center justify-center w-full h-12 px-6 text-sm uppercase bg-gradient-to-l from-orange-500 to-orange-700 hover:bg-gredient-to-r hover:bg-orange-800 hover:to-orange-500 hover:font-bold text-white rounded-lg"
-              >
-                Buy now
-              </button>
+              <Link to={`/payment/${"silver"}`}>
+                <button className="flex items-center justify-center w-full h-12 px-6 text-sm uppercase bg-gradient-to-l from-orange-500 to-orange-700 hover:bg-gredient-to-r hover:bg-orange-800 hover:to-orange-500 hover:font-bold text-white rounded-lg">
+                  Buy now
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -141,12 +138,11 @@ const Subscribtion = () => {
               </ul>
             </div>
             <div className="flex px-10 pb-10 justfy-center">
-              <button
-                onClick={() => handlePremiumBtn("Platinum")}
-                className="flex items-center justify-center w-full h-12 px-6 text-sm uppercase bg-gradient-to-l from-orange-500 to-orange-700 hover:bg-gredient-to-r hover:bg-orange-800 hover:to-orange-500 hover:font-bold text-white rounded-lg"
-              >
-                Buy now
-              </button>
+              <Link to={`/payment/${"platinum"}`}>
+                <button className="flex items-center justify-center w-full h-12 px-6 text-sm uppercase bg-gradient-to-l from-orange-500 to-orange-700 hover:bg-gredient-to-r hover:bg-orange-800 hover:to-orange-500 hover:font-bold text-white rounded-lg">
+                  Buy now
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -211,12 +207,11 @@ const Subscribtion = () => {
               </ul>
             </div>
             <div className="flex px-10 pb-10 justfy-center">
-              <button
-                onClick={() => handlePremiumBtn("Gold")}
-                className="flex items-center justify-center w-full h-12 px-6 text-sm uppercase bg-gradient-to-l from-orange-500 to-orange-700 hover:bg-gredient-to-r hover:bg-orange-800 hover:to-orange-500 hover:font-bold text-white rounded-lg"
-              >
-                Buy now
-              </button>
+              <Link to={`/payment/${"gold"}`}>
+                <button className="flex items-center justify-center w-full h-12 px-6 text-sm uppercase bg-gradient-to-l from-orange-500 to-orange-700 hover:bg-gredient-to-r hover:bg-orange-800 hover:to-orange-500 hover:font-bold text-white rounded-lg">
+                  Buy now
+                </button>
+              </Link>
             </div>
           </div>
         </div>

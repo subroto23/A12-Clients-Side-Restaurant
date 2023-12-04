@@ -93,7 +93,7 @@ const MealsDetails = () => {
     <div>
       <HelmetHookes title={loader?.title}></HelmetHookes>
       {SectionTitle}
-      <div className="flex md:flex-row flex-col md:gap-x-8">
+      <div className="flex md:flex-row flex-col md:gap-x-8 px-2">
         <div className="py-2 md:w-1/2">
           <div className="relative h-full">
             <img

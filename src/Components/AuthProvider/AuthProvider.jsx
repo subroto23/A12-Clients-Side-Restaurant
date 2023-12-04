@@ -14,7 +14,7 @@ import UseAxiosPublic from "../../Hookes/AxiosPublic/UseAxiosPublic";
 export const Authcontext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
   //Create User
@@ -54,7 +54,6 @@ const AuthProvider = ({ children }) => {
   const axiosPublic = UseAxiosPublic();
   //On auth State Change
   useEffect(() => {
-    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (CurrentUser) => {
       if (CurrentUser) {
         setUser(CurrentUser);
