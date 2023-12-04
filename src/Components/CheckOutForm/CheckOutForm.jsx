@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
-import Subscribtion from "../../Pages/Home/Subscribtion/Subscribtion";
 
 const CheckoutForm = ({ data }) => {
   const [ClientSecret, setClientSecret] = useState("");
@@ -33,7 +32,7 @@ const CheckoutForm = ({ data }) => {
     // Get a reference to a mounted CardElement. Elements knows how
     // to find your CardElement because there can only ever be one of
     // each type of element.
-    const card = elements.getElement(Subscribtion);
+    const card = elements.getElement("2200");
 
     if (card == null) {
       return;
