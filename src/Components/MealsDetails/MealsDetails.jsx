@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { IoIosStar } from "react-icons/io";
 import { CiStar } from "react-icons/ci";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
@@ -8,14 +8,17 @@ import Swal from "sweetalert2";
 import ReviewsItemsBased from "../ReviewsItemsBased/ReviewsItemsBased";
 import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
 import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
+import UseUsersTypes from "../../Hookes/UsersType/UsersTypes";
 
 const MealsDetails = () => {
   const loader = useLoaderData();
   const AxiosSecure = UseAxiosSecure();
+  const [userCheck, usersTypesLoading] = UseUsersTypes();
   const SectionTitle = UseSectionTitle("Meal", "Details");
   const { user } = UseAuth();
   const [like, setLike] = useState("Like");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   //Rating Creating
   const StarRating = () => {
     const stars = Array.from({ length: loader.rating }, (_, index) => (
@@ -89,6 +92,23 @@ const MealsDetails = () => {
     });
   };
 
+  //Order Payment
+  const handleOrder = (id) => {
+    if (!user) {
+      Swal.fire("Please Login First");
+      return navigate("/login");
+    }
+    if (!usersTypesLoading && !userCheck.catagory) {
+      return Swal.fire("Only premium Users can Orders");
+    }
+    navigate("/payment", {
+      state: {
+        orderId: id,
+        price: loader.price,
+      },
+    });
+  };
+
   return (
     <div>
       <HelmetHookes title={loader?.title}></HelmetHookes>
@@ -159,6 +179,7 @@ const MealsDetails = () => {
             >
               {like}
             </button>
+            
             <button
               className="px-4 border-r bg-orange-400 py-3 text-white hover:bg-gray-400 hover:text-black font-bold w-1/2"
               onClick={() => document.getElementById("my_modal_5").showModal()}
@@ -203,7 +224,11 @@ const MealsDetails = () => {
                 </div>
               </div>
             </dialog>
-            <button className="px-4 border-r bg-orange-400 py-3 text-white hover:bg-gray-400 hover:text-black font-bold w-1/2">
+
+            <button
+              onClick={() => handleOrder(loader._id)}
+              className="px-4 border-r bg-orange-400 py-3 text-white hover:bg-gray-400 hover:text-black font-bold w-1/2"
+            >
               Order
             </button>
           </div>

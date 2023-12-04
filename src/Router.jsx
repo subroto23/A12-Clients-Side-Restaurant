@@ -19,6 +19,12 @@ import ErrorPage from "./Components/ErrorPages/ErrorPages";
 import TabSystemCatagory from "./Pages/Home/TabSystem/TabSystemCatagory";
 import Upcomming from "./Components/Upcomming/Upcomming";
 import Payment from "./Components/Payment/Payment";
+import UsersDashboard from "./Pages/UsersDashBoard/UsersDashboard";
+import UsersHomePage from "./Pages/UsersDashBoard/UsersHomePage";
+import Profile from "./Pages/UsersDashBoard/Profile/Profile";
+import UsersMeals from "./Pages/UsersDashBoard/UsersMeals/UsersMeals";
+import ServeMeal from "./Components/ServeMeal/ServeMeal";
+import UserReviews from "./Pages/UsersDashBoard/UserReviews/UserReviews";
 
 const router = createBrowserRouter([
   {
@@ -47,13 +53,12 @@ const router = createBrowserRouter([
         element: <Upcomming />,
       },
       {
-        path: "/payment/:name",
+        path: "/payment",
         element: (
           <PrivateRoute>
             <Payment />
           </PrivateRoute>
         ),
-        loader: ({ params }) => params?.name,
       },
       {
         path: "/meals/details/meal/:id",
@@ -63,10 +68,38 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5001/api/meals/${params.id}`),
+          fetch(`https://backend-tan-ten.vercel.app/api/meals/${params.id}`),
       },
     ],
   },
+  // Users Dashboard
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <UsersDashboard />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "/dashboard",
+        element: <UsersHomePage></UsersHomePage>,
+      },
+      {
+        path: "/dashboard/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/dashboard/order-meal",
+        element: <UsersMeals />,
+      },
+      {
+        path: "/dashboard/reviews",
+        element: <UserReviews />,
+      },
+    ],
+  },
+  // Admin Dashboard
   {
     path: "/admin/dashboard",
     element: (
@@ -101,11 +134,15 @@ const router = createBrowserRouter([
         path: "/admin/dashboard/update/:id",
         element: <UpdateMeals />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5001/api/meals/${params.id}`),
+          fetch(`https://backend-tan-ten.vercel.app/api/meals/${params.id}`),
       },
       {
         path: "/admin/dashboard/reviews",
         element: <AllReviews />,
+      },
+      {
+        path: "/admin/dashboard/serve-meals",
+        element: <ServeMeal />,
       },
       {
         path: "/admin/dashboard/upcomming",

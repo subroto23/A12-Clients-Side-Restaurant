@@ -8,19 +8,35 @@ import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
 
 const CheckoutForm = ({ data }) => {
   const [ClientSecret, setClientSecret] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [tranjecttionId, setTranjectionID] = useState("");
+  const [PriceValue, setPriceValue] = useState({});
   const stripe = useStripe();
   const elements = useElements();
   const { user } = UseAuth();
   const AxiosSecure = UseAxiosSecure();
-  const SectionTitle = UseSectionTitle("Payment Your", "Order");
+
   //
   useEffect(() => {
-    AxiosSecure.post("/payment/create", { price: 2200 }).then((res) =>
+    if (data.state.package) {
+      if (data?.state?.package === "gold") {
+        setPriceValue({ price: 2600 });
+      } else if (data?.state?.package === "platinum") {
+        setPriceValue({ price: 3200 });
+      } else if (data?.state?.package === "silver") {
+        setPriceValue({ price: 2200 });
+      }
+    } else if (data.state.price && data.state.orderId) {
+      setPriceValue({ price: Number(data?.state?.price) });
+    }
+  }, [data]);
+  //
+  useEffect(() => {
+    AxiosSecure.post("/payment/create", PriceValue).then((res) =>
       setClientSecret(res.data.clientSecret)
     );
-  }, [AxiosSecure]);
+  }, [AxiosSecure, PriceValue]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +67,7 @@ const CheckoutForm = ({ data }) => {
       console.log("[PaymentMethod]", paymentMethod);
       setError(null);
     }
-
+    setLoading(true);
     //Conform Card Payment
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(ClientSecret, {
@@ -76,40 +92,85 @@ const CheckoutForm = ({ data }) => {
       console.log("Payment Success", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         setTranjectionID(paymentIntent.id);
-        Swal.fire(`Payment Success!. Your TransactionId: ${tranjecttionId}`);
+        // Package Upgrade
+        if (data.state.package) {
+          await AxiosSecure.patch(
+            `/api/users/user/catagory?email=${user?.email}`,
+            {
+              catagory: data?.state?.package,
+            }
+          ).then(() => {
+            setLoading(false);
+            Swal.fire(`Payment Success!`);
+          });
+        }
+        //Order Items
+        else if (data.state.orderId) {
+          const OrderValue = {
+            email: user?.email,
+            name: user?.displayName,
+            date: new Date(),
+            payId: paymentIntent.id,
+            price: data?.state?.price,
+            itemsId: data?.state?.orderId,
+          };
+          await AxiosSecure.post(
+            `/orders/create?email=${user?.email}`,
+            OrderValue
+          ).then(() => {
+            setLoading(false);
+            Swal.fire(`Payment Success!`);
+          });
+        }
       }
     }
   };
   return (
     <div>
-      {SectionTitle}
-      <form onSubmit={handleSubmit} className="py-6 md:w-1/2 mx-auto">
-        <CardElement
-          className="py-5"
-          options={{
-            style: {
-              base: {
-                fontSize: "20px",
-                color: "#fb923c",
-                "::placeholder": {
-                  color: "#27413",
+      {UseSectionTitle("Payment", `${PriceValue.price} Taka`)}
+      <div className="max-w-xl mx-auto border-2 border-orange-400">
+        <form onSubmit={handleSubmit} className="py-6 md:w-1/2 mx-auto">
+          <CardElement
+            options={{
+              style: {
+                base: {
+                  fontSize: "20px",
+                  color: "#424770",
+                  "::placeholder": {
+                    color: "#aab7c4",
+                  },
+                },
+                invalid: {
+                  color: "#9e2146",
                 },
               },
-              invalid: {
-                color: "#9e2146",
-              },
-            },
-          }}
-        />
-        <button
-          type="submit"
-          disabled={!stripe || !ClientSecret}
-          className="flex btn btn-gost items-center justify-center my-8 mx-auto h-12 px-6 text-sm uppercase rounded-lg"
-        >
-          Pay
-        </button>
-        {error && <p className="text-red-600 text-lg text-center">{error}</p>}
-      </form>
+            }}
+          />
+          <button
+            type="submit"
+            disabled={!stripe || !ClientSecret}
+            className="flex btn bg-orange-400 disabled:opacity-50 disabled:cursor-not-allowed items-center justify-center my-8 mx-auto h-12 px-6 text-sm uppercase rounded-lg"
+          >
+            {loading ? (
+              <>
+                <span className="loading loading-spinner text-secondary"></span>{" "}
+                Processing
+              </>
+            ) : (
+              "Pay "
+            )}
+          </button>
+          {error && <p className="text-red-600 text-lg text-center">{error}</p>}
+          {tranjecttionId && (
+            <p className="text-center">
+              TranjectionId ;
+              <span className="font-bold text-green-600 text-xl">
+                {tranjecttionId}
+              </span>
+            </p>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

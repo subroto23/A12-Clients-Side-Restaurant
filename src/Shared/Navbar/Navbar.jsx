@@ -160,7 +160,7 @@ const Navbar = () => {
                     <>
                       <li className="hover:font-semibold  border-b py-2">
                         <button>
-                          <Link to="/dashboard">Dashboard User</Link>
+                          <Link to="/dashboard">Dashboard</Link>
                         </button>
                       </li>
                     </>

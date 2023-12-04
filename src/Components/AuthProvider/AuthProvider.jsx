@@ -74,6 +74,7 @@ const AuthProvider = ({ children }) => {
           });
       } else {
         localStorage.removeItem("access_token");
+        setUser(null);
         setLoading(false);
       }
     });
