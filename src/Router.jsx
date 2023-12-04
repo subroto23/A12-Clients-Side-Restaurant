@@ -68,7 +68,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`https://backend-tan-ten.vercel.app/api/meals/${params.id}`),
+          fetch(`https://backend-tan-ten.vercel.app/api/meals/${params.id}`, {
+            credentials: "include",
+          }),
       },
     ],
   },
@@ -134,7 +136,9 @@ const router = createBrowserRouter([
         path: "/admin/dashboard/update/:id",
         element: <UpdateMeals />,
         loader: ({ params }) =>
-          fetch(`https://backend-tan-ten.vercel.app/api/meals/${params.id}`),
+          fetch(`https://backend-tan-ten.vercel.app/api/meals/${params.id}`, {
+            credentials: "include",
+          }),
       },
       {
         path: "/admin/dashboard/reviews",

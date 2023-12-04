@@ -4,6 +4,7 @@ import UseAuth from "../AuthUser/UseAuth";
 
 const AxiosPrivate = axios.create({
   baseURL: "https://backend-tan-ten.vercel.app",
+  withCredentials: true,
 });
 
 //Functions Creating
