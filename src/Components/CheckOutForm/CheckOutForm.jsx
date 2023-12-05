@@ -17,7 +17,7 @@ const CheckoutForm = ({ data }) => {
   const { user } = UseAuth();
   const AxiosSecure = UseAxiosSecure();
 
-  //
+  //Order And Premium Packages Data Load
   useEffect(() => {
     if (data.state.package) {
       if (data?.state?.package === "gold") {
@@ -31,13 +31,17 @@ const CheckoutForm = ({ data }) => {
       setPriceValue({ price: Number(data?.state?.price) });
     }
   }, [data]);
-  //
+
+  //Backed Send Data To Strip
   useEffect(() => {
-    AxiosSecure.post("/payment/create", PriceValue).then((res) =>
-      setClientSecret(res.data.clientSecret)
-    );
+    if (PriceValue.price > 0) {
+      AxiosSecure.post("/payment/create", PriceValue).then((res) =>
+        setClientSecret(res?.data?.clientSecret)
+      );
+    }
   }, [AxiosSecure, PriceValue]);
 
+  //Form Submissions Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -49,12 +53,11 @@ const CheckoutForm = ({ data }) => {
     // to find your CardElement because there can only ever be one of
     // each type of element.
     const card = elements.getElement(CardElement);
-
     if (card == null) {
       return;
     }
 
-    // Use your card Element with other Stripe.js APIs
+    // Use card Element with other Stripe.js APIs
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card,

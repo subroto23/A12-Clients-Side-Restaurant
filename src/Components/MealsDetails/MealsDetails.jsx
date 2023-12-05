@@ -40,7 +40,7 @@ const MealsDetails = () => {
   };
 
   //Handle Like Counts
-  const handleLikeCount = () => {
+  const handleLikeCount = (e) => {
     AxiosSecure.patch(
       `/api/meals/like/count?id=${loader._id}&email=${user?.email}`,
       {
@@ -49,6 +49,7 @@ const MealsDetails = () => {
     ).then((res) => {
       if (res.data.modifiedCount > 0) {
         setLike(`Loved`);
+        e.currentTarget.disabled = true;
       }
     });
   };
@@ -179,7 +180,7 @@ const MealsDetails = () => {
             >
               {like}
             </button>
-            
+
             <button
               className="px-4 border-r bg-orange-400 py-3 text-white hover:bg-gray-400 hover:text-black font-bold w-1/2"
               onClick={() => document.getElementById("my_modal_5").showModal()}

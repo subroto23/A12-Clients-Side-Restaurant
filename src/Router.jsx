@@ -16,7 +16,6 @@ import AdminRoute from "./Components/AdminRoute/AdminRoute";
 import AdminDashBoard from "./Layout/AdminDashboard/AdminDashBoard";
 import AdminProfile from "./Components/AdminProfile/AdminProfile";
 import ErrorPage from "./Components/ErrorPages/ErrorPages";
-import TabSystemCatagory from "./Pages/Home/TabSystem/TabSystemCatagory";
 import Upcomming from "./Components/Upcomming/Upcomming";
 import Payment from "./Components/Payment/Payment";
 import UsersDashboard from "./Pages/UsersDashBoard/UsersDashboard";
@@ -25,6 +24,7 @@ import Profile from "./Pages/UsersDashBoard/Profile/Profile";
 import UsersMeals from "./Pages/UsersDashBoard/UsersMeals/UsersMeals";
 import ServeMeal from "./Components/ServeMeal/ServeMeal";
 import UserReviews from "./Pages/UsersDashBoard/UserReviews/UserReviews";
+import MealsPages from "./Pages/MealsPages/MealsPages";
 
 const router = createBrowserRouter([
   {
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/meals",
-        element: <TabSystemCatagory />,
+        element: <MealsPages />,
       },
       {
         path: "/upcomming",
@@ -68,7 +68,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`https://backend-tan-ten.vercel.app/api/meals/${params.id}`, {
+          fetch(`http://localhost:5001/api/meals/${params.id}`, {
             credentials: "include",
           }),
       },
@@ -82,6 +82,7 @@ const router = createBrowserRouter([
         <UsersDashboard />
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/dashboard",
@@ -111,6 +112,7 @@ const router = createBrowserRouter([
         </AdminRoute>
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/admin/dashboard",
@@ -136,7 +138,7 @@ const router = createBrowserRouter([
         path: "/admin/dashboard/update/:id",
         element: <UpdateMeals />,
         loader: ({ params }) =>
-          fetch(`https://backend-tan-ten.vercel.app/api/meals/${params.id}`, {
+          fetch(`http://localhost:5001/api/meals/${params.id}`, {
             credentials: "include",
           }),
       },
