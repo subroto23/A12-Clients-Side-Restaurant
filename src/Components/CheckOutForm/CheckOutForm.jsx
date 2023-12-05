@@ -36,7 +36,6 @@ const CheckoutForm = ({ data }) => {
   useEffect(() => {
     if (PriceValue.price > 0) {
       AxiosSecure.post("/payment/create", PriceValue).then((res) => {
-        console.log(res?.data?.clientSecret);
         setClientSecret(res?.data?.clientSecret);
       });
     }
@@ -74,7 +73,7 @@ const CheckoutForm = ({ data }) => {
     setLoading(true);
     //Conform Card Payment
     const { paymentIntent, error: confirmError } =
-      await stripe.confirmCardPayment(ClientSecret, {
+      await stripe.confirmCardPayment(`${ClientSecret}`, {
         payment_method: {
           card: card,
           billing_details: {
