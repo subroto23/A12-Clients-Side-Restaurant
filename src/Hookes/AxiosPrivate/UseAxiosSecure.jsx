@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import UseAuth from "../AuthUser/UseAuth";
 
 const AxiosPrivate = axios.create({
+  // baseURL: "https://backend-tan-ten.vercel.app",
   baseURL: "https://backend-tan-ten.vercel.app",
   withCredentials: true,
 });

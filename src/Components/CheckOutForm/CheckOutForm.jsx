@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
+import UseAxiosPublic from "../../Hookes/AxiosPublic/UseAxiosPublic";
 
 const CheckoutForm = ({ data }) => {
   const [ClientSecret, setClientSecret] = useState("");
@@ -16,6 +17,7 @@ const CheckoutForm = ({ data }) => {
   const elements = useElements();
   const { user } = UseAuth();
   const AxiosSecure = UseAxiosSecure();
+  const AxiosPublic = UseAxiosPublic();
 
   //Order And Premium Packages Data Load
   useEffect(() => {
@@ -35,11 +37,12 @@ const CheckoutForm = ({ data }) => {
   //Backed Send Data To Strip
   useEffect(() => {
     if (PriceValue.price > 0) {
-      AxiosSecure.post("/payment/create", PriceValue).then((res) => {
+      AxiosPublic.post("/payment/create", PriceValue).then((res) => {
         setClientSecret(res?.data?.clientSecret);
+        console.log(res?.data?.clientSecret);
       });
     }
-  }, [AxiosSecure, PriceValue]);
+  }, [AxiosPublic, PriceValue]);
 
   //Form Submissions Handler
   const handleSubmit = async (e) => {
@@ -71,6 +74,7 @@ const CheckoutForm = ({ data }) => {
       setError(null);
     }
     setLoading(true);
+
     //Conform Card Payment
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(`${ClientSecret}`, {
@@ -83,8 +87,8 @@ const CheckoutForm = ({ data }) => {
         },
       });
 
+    //
     if (confirmError) {
-      console.log("confirmError", confirmError.message);
       Swal.fire({
         icon: "error",
         title: "Oops...",
