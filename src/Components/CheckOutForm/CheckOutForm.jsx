@@ -132,8 +132,8 @@ const CheckoutForm = ({ data }) => {
   return (
     <div>
       {UseSectionTitle("Payment", `${PriceValue.price} Taka`)}
-      <div className="max-w-xl mx-auto border-2 border-orange-400">
-        <form onSubmit={handleSubmit} className="py-6 md:w-1/2 mx-auto">
+      <div className="max-w-3xl mx-auto border-2 border-orange-400">
+        <form onSubmit={handleSubmit} className="py-6 mx-auto">
           <CardElement
             options={{
               style: {
