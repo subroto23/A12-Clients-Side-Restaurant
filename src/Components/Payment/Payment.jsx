@@ -4,7 +4,6 @@ import CheckoutForm from "../CheckOutForm/CheckOutForm";
 import { useLocation } from "react-router-dom";
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_PUBLISHABLED_KEY}`);
-console.log(import.meta.env.VITE_PUBLISHABLED_KEY);
 const Payment = () => {
   const location = useLocation();
   return (

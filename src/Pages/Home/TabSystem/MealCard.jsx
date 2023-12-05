@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 const MealCard = ({ data }) => {
   const { title, imageUrl, rating, price, _id } = data;
-
   //Rating Calculations
   const StarRating = () => {
     const stars = Array.from({ length: rating }, (_, index) => (

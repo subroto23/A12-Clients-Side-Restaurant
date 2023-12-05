@@ -5,6 +5,7 @@ import MealCard from "./MealCard";
 import UseSectionTitle from "../../../Hookes/SectionTitle/UseSectionTitle";
 const TabSystemCatagory = () => {
   const [meals, loader, refetch] = UseAllMeals();
+
   const SectionTitle = UseSectionTitle("Popular", "Meals", "md:mt-28 md:mb-16");
   if (loader) {
     return (
