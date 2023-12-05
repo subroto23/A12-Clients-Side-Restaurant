@@ -35,9 +35,10 @@ const CheckoutForm = ({ data }) => {
   //Backed Send Data To Strip
   useEffect(() => {
     if (PriceValue.price > 0) {
-      AxiosSecure.post("/payment/create", PriceValue).then((res) =>
-        setClientSecret(res?.data?.clientSecret)
-      );
+      AxiosSecure.post("/payment/create", PriceValue).then((res) => {
+        console.log(res?.data?.clientSecret);
+        setClientSecret(res?.data?.clientSecret);
+      });
     }
   }, [AxiosSecure, PriceValue]);
 
