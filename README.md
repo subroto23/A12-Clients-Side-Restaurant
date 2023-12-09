@@ -4,7 +4,7 @@
 
 Through the website a user can order food for a whole month through a specific package.
 
-## Preview
+## Live Link
 
 - https://hostel-management-delta.vercel.app/
 
