@@ -1,8 +1,22 @@
-# React + Vite
+# IUmeal Management Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+Through the website a user can order food for a whole month through a specific package.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Preview
+
+- https://hostel-management-delta.vercel.app/
+
+## Features
+
+- Implement Firebase Authentication for secure user management
+- Allow users to choose from various subscription plans based on their preferences and dietary requirements.
+- User and Admin Dashboard
+- Integrate a payment gateway (stripe) for users to subscribe to meal plans securely.
+- Show Users current Orders Status
+- Likes and Review meals
+
+## Technology Used
+
+[![My Skills](https://skillicons.dev/icons?i=html,tailwind,react,mongodb,firebase,express,nodejs)](https://skillicons.dev)

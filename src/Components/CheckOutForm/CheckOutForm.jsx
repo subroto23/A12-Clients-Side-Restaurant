@@ -5,10 +5,9 @@ import Swal from "sweetalert2";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
-import UseAxiosPublic from "../../Hookes/AxiosPublic/UseAxiosPublic";
 
 const CheckoutForm = ({ data }) => {
-  const [ClientSecret, setClientSecret] = useState("");
+  const [secretClient, setSecretClient] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [tranjecttionId, setTranjectionID] = useState("");
@@ -17,7 +16,6 @@ const CheckoutForm = ({ data }) => {
   const elements = useElements();
   const { user } = UseAuth();
   const AxiosSecure = UseAxiosSecure();
-  const AxiosPublic = UseAxiosPublic();
 
   //Order And Premium Packages Data Load
   useEffect(() => {
@@ -37,17 +35,16 @@ const CheckoutForm = ({ data }) => {
   //Backed Send Data To Strip
   useEffect(() => {
     if (PriceValue.price > 0) {
-      AxiosPublic.post("/payment/create", PriceValue).then((res) => {
-        setClientSecret(res?.data?.clientSecret);
-        console.log(res?.data?.clientSecret);
+      AxiosSecure.post("/payment/create", PriceValue).then((res) => {
+        setSecretClient(res?.data?.clientSecret);
       });
     }
-  }, [AxiosPublic, PriceValue]);
+  }, [AxiosSecure, PriceValue]);
 
   //Form Submissions Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (!stripe || !elements) {
       return;
     }
@@ -73,11 +70,10 @@ const CheckoutForm = ({ data }) => {
       console.log("[PaymentMethod]", paymentMethod);
       setError(null);
     }
-    setLoading(true);
 
     //Conform Card Payment
     const { paymentIntent, error: confirmError } =
-      await stripe.confirmCardPayment(`${ClientSecret}`, {
+      await stripe.confirmCardPayment(`${secretClient}`, {
         payment_method: {
           card: card,
           billing_details: {
@@ -96,7 +92,6 @@ const CheckoutForm = ({ data }) => {
         footer: "Please try again later",
       });
     } else {
-      console.log("Payment Success", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         setTranjectionID(paymentIntent.id);
         // Package Upgrade
@@ -155,7 +150,7 @@ const CheckoutForm = ({ data }) => {
           />
           <button
             type="submit"
-            disabled={!stripe || !ClientSecret}
+            disabled={!stripe || !secretClient}
             className="flex btn bg-orange-400 disabled:opacity-50 disabled:cursor-not-allowed items-center justify-center my-8 mx-auto h-12 px-6 text-sm uppercase rounded-lg"
           >
             {loading ? (
