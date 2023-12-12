@@ -72,8 +72,9 @@ const CheckoutForm = ({ data }) => {
     }
 
     //Conform Card Payment secretClient
+    console.log("SecretClient = ",secretClient);
     const { paymentIntent, error: confirmError } =
-      await stripe.confirmCardPayment("pk_test_51OJNvdCKXqDK7MZNjLjoPc6vxJPiWKastqawEz7d1YvRxDRQs7wd9VcPLERrfUW7QgCHukJdWul8rhiRQ2DiCgPf00UvDBBQ5n", {
+      await stripe.confirmCardPayment(`${secretClient}`, {
         payment_method: {
           card: card,
           billing_details: {
