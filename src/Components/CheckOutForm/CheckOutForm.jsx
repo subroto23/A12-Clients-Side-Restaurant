@@ -37,7 +37,7 @@ const CheckoutForm = ({ data }) => {
     if (PriceValue.price > 0) {
       AxiosSecure.post("/payment/create", PriceValue).then((res) => {
         setSecretClient(res?.data?.clientSecret);
-          console.log(secretClient);
+          console.log(res?.data?.clientSecret);
       });
     }
   }, [AxiosSecure, PriceValue]);
