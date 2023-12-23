@@ -131,7 +131,7 @@ const Navbar = () => {
           </div>
 
           {/* Profile */}
-          {loading && user ? (
+          {loading || user ? (
             <>
               <div
                 className="dropdown dropdown-end tooltip tooltip-left"
