@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APIKEY,
   authDomain: import.meta.env.VITE_AUTHDOMAIN,
@@ -13,31 +13,43 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const messaging = getMessaging();
+const messaging = getMessaging(app);
 
-//
-const gettingTonken = async () => {
-  return await getToken(messaging, {
-    vapidKey:
-      "BF0hfmRxi7cHEcB3_Ev13X4iLTxJkDwRMX731QO3_lQci4zEaVIaIZnzhcrHQPNK2j80q7HMDhdCySUH_9NGXk4",
-  })
-    .then((currentToken) => {
-      if (currentToken) {
-        // Send the token to your server and update the UI if necessary
-        // ...
-        console.log(currentToken);
-      } else {
-        // Show permission request UI
-        console.log(
-          "No registration token available. Request permission to generate one."
-        );
-        // ...
-      }
-    })
-    .catch((err) => {
-      console.log("An error occurred while retrieving token. ", err);
-      // ...
-    });
+export const reqPermission = () => {
+  console.log("Requesting permission...");
+  Notification.requestPermission().then((permission) => {
+    if (permission === "granted") {
+      console.log("Notification permission granted.");
+      return getToken(messaging, {
+        vapidKey:
+          "BBVuIUu_9O5da-NmJgyBGl6Y2d0HsLswgkFAceAmy0Dg09-OVOgMADp8CYFtuG4ormvp0w3D18DH6bEhR1UmNJI",
+      })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log(currentToken);
+          } else {
+            // Show permission request UI
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+            // ...
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token. ", err);
+          // ...
+        });
+    } else {
+      console.log("Notification permission denied.");
+    }
+  });
 };
-gettingTonken();
+
+export const onMessageListener = () =>
+  new Promise((resolve) => {
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload);
+      resolve(payload);
+    });
+  });
 export default auth;

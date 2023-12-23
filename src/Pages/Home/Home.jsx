@@ -1,3 +1,4 @@
+import NotificationMessage from "../../Components/NotificationMessage/NotificationMessage";
 import Upcomming from "../../Components/Upcomming/Upcomming";
 import Carosal from "./Carosal/Carosal";
 import ParalexBanner from "./ParalexBanner/ParalexBanner";
@@ -14,6 +15,7 @@ const Home = () => {
       <ParalexBanner />
       <Upcomming />
       <Subscribtion />
+      <NotificationMessage />
     </div>
   );
 };
