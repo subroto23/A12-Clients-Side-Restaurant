@@ -131,11 +131,11 @@ const Navbar = () => {
           </div>
 
           {/* Profile */}
-          {loading ? null : user ? (
+          {!loading ? null : user ? (
             <>
               <div
                 className="dropdown dropdown-end tooltip tooltip-left"
-                data-tip={user.displayName}
+                data-tip={user?.displayName}
               >
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full ">
