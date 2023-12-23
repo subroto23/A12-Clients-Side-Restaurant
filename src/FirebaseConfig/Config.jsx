@@ -45,11 +45,12 @@ export const reqPermission = () => {
   });
 };
 
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    onMessage(messaging, (payload) => {
+export const onMessageListener = async () => {
+  const messagingResolve = await messaging;
+  if (messagingResolve) {
+    onMessage(messagingResolve, (payload) => {
       console.log("Message received. ", payload);
-      resolve(payload);
     });
-  });
+  }
+};
 export default auth;
