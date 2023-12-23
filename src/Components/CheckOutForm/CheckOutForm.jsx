@@ -37,6 +37,7 @@ const CheckoutForm = ({ data }) => {
     if (PriceValue.price > 0) {
       AxiosSecure.post("/payment/create", PriceValue).then((res) => {
         setSecretClient(res?.data?.clientSecret);
+          console.log(res?.data?.clientSecret);
       });
     }
   }, [AxiosSecure, PriceValue]);
@@ -71,7 +72,7 @@ const CheckoutForm = ({ data }) => {
       setError(null);
     }
 
-    //Conform Card Payment
+    //Conform Card Payment secretClient
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(`${secretClient}`, {
         payment_method: {
