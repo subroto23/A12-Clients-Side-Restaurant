@@ -1,16 +1,18 @@
 import { Link, NavLink } from "react-router-dom";
-import { IoIosNotifications } from "react-icons/io";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 // import { GrLogin } from "react-icons/gr";
 import { IoMenuSharp } from "react-icons/io5";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import Swal from "sweetalert2";
 import UseAdmin from "../../Hookes/AdminVerify/UseAdmin";
 import { useEffect, useState } from "react";
+import UseBalance from "../../Hookes/Balance/UseBalance";
 
 const Navbar = () => {
   const { user, loading, handleLogOut } = UseAuth();
   const [isAdmin, adminLoading] = UseAdmin();
   const [stickyClass, setStickyClass] = useState("");
+  const [cash] = UseBalance();
 
   useEffect(() => {
     window.addEventListener("scroll", stickNavbar);
@@ -62,15 +64,13 @@ const Navbar = () => {
       <div className="indicator">
         <NavLink
           style={activeRouteStyle}
-          className="mx-5 hover:text-orange-700 uppercase font-medium"
-          to="/noticification"
+          className="mx-5 hover:text-orange-700 uppercase font-medium flex gap-1 bg-red-500 px-2 py-1 rounded-xl"
+          to="/"
         >
-          <span className="text-2xl">
-            <IoIosNotifications />
+          <span className="">
+            <FaBangladeshiTakaSign />
           </span>
-          <span className="indicator-item badge bg-orange-200 text-black">
-            99+
-          </span>
+          <span className="font-boldtext-white">{cash}</span>
         </NavLink>
       </div>
     </>

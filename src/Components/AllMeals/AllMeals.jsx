@@ -1,13 +1,38 @@
 import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
 import Swal from "sweetalert2";
-import UseAllMeals from "../../Hookes/AllMeals/UseAllMeals";
 import { Link } from "react-router-dom";
 import UseAxiosPublic from "../../Hookes/AxiosPublic/UseAxiosPublic";
-import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
+// import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
+import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import UsePagination from "../../Hookes/Pagination/UsePagination";
+import UseAuth from "../../Hookes/AuthUser/UseAuth";
 
 const AllMeals = () => {
-  const [meals, loader, refetch] = UseAllMeals();
-  const SectionTitle = UseSectionTitle("All Posted", "Meals");
+  const AxiosSecure = UseAxiosSecure();
+  const { user } = UseAuth();
+  // Pagination
+  const [count, setCount] = useState(null);
+  const [skipValue, setSkipValue] = useState(1);
+  const size = 5;
+  const [paginationPage, currentPage] = UsePagination(count, size, skipValue);
+  const {
+    data: meals = [],
+    isLoading: loader,
+    refetch,
+  } = useQuery({
+    queryKey: ["mealsValue", currentPage],
+    queryFn: async () => {
+      const res = await AxiosSecure.get(
+        `/api/meals/admin?email=${user?.email}&page=${currentPage}&limit=${size}`
+      );
+      setCount(res?.data?.totalCount);
+      setSkipValue(res?.data?.skipValue);
+      return res.data;
+    },
+  });
+  // const SectionTitle = UseSectionTitle("All Posted", "Meals");
   if (loader) {
     return <span className="loading loading-spinner text-error"></span>;
   }
@@ -40,8 +65,8 @@ const AllMeals = () => {
   return (
     <div>
       <HelmetHookes title={"All Meals || pages"}></HelmetHookes>
-      {SectionTitle}
-      <div>
+      {/* {SectionTitle} */}
+      <div className="my-8">
         <div className="overflow-x-auto rounded-[3%]">
           <table className="table table-zebra w-full text-center">
             {/* head */}
@@ -59,7 +84,7 @@ const AllMeals = () => {
               </tr>
             </thead>
             <tbody>
-              {meals.map((data, idx) => {
+              {meals?.datas?.map((data, idx) => {
                 return (
                   <tr key={data._id}>
                     <th>{idx + 1}</th>
@@ -95,6 +120,7 @@ const AllMeals = () => {
               })}
             </tbody>
           </table>
+          {paginationPage}
         </div>
       </div>
     </div>

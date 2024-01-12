@@ -18,7 +18,7 @@ const AdminDashBoard = () => {
           <div className="flex flex-wrap -m-4 text-center">
             <div className="p-4 sm:w-1/4 w-1/2 bg-gradient-to-r from-green-500 via-green-200">
               <h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-900">
-                {users.length}
+                {users?.datas?.length}
               </h2>
               <p className="leading-relaxed">Users</p>
             </div>
