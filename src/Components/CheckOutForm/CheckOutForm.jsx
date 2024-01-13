@@ -105,7 +105,6 @@ const CheckoutForm = ({ data }) => {
             }
           ).then(() => {
             setLoading(false);
-            Swal.fire(`Payment Success!`);
           });
         }
         //Order Items
@@ -127,23 +126,25 @@ const CheckoutForm = ({ data }) => {
             Swal.fire(`Payment Success!`);
           });
         }
+        //Balance
+        const balanceDatas = {
+          email: user?.email,
+          taka: subscriberValue?.price,
+          txd: paymentIntent?.id,
+        };
+        if (Number(subscriberValue.price) > 0) {
+          await AxiosSecure.post(
+            `/api/balance/create?email=${user?.email}`,
+            balanceDatas
+          ).then(async (res) => {
+            if (res?.data?.insertedId) {
+              await refetch();
+              setLoading(false);
+              Swal.fire(`Payment Success!`);
+            }
+          });
+        }
       }
-    }
-    //Balance
-    const balanceDatas = {
-      email: user?.email,
-      taka: subscriberValue?.price,
-      txd: tranjecttionId,
-    };
-    if (Number(subscriberValue.price) > 0) {
-      await AxiosSecure.post(
-        `/api/balance/create?email=${user?.email}`,
-        balanceDatas
-      ).then(() => {
-        refetch();
-        setLoading(false);
-        Swal.fire(`Payment Success!`);
-      });
     }
   };
 
