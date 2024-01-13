@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const AxiosPublic = axios.create({
-  baseURL: "http://localhost:5001",
+  baseURL: "https://backend-tan-ten.vercel.app",
   withCredentials: true,
 });
 const UseAxiosPublic = () => {

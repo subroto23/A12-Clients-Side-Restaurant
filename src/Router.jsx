@@ -68,7 +68,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5001/api/meals/${params.id}`, {
+          fetch(`https://backend-tan-ten.vercel.app/api/meals/${params.id}`, {
             credentials: "include",
           }),
       },
@@ -138,11 +138,11 @@ const router = createBrowserRouter([
         path: "/admin/dashboard/update/:id",
         element: <UpdateMeals />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5001/api/meals/${params.id}`, {
+          fetch(`https://backend-tan-ten.vercel.app/api/meals/${params.id}`, {
             credentials: "include",
           }),
       },
-      // http://localhost:5001
+      // https://backend-tan-ten.vercel.app
       {
         path: "/admin/dashboard/reviews",
         element: <AllReviews />,
