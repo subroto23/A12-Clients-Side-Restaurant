@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
+import UseBalance from "../../Hookes/Balance/UseBalance";
 
 const CheckoutForm = ({ data }) => {
   const [secretClient, setSecretClient] = useState("");
@@ -12,36 +13,36 @@ const CheckoutForm = ({ data }) => {
   const [error, setError] = useState("");
   const [tranjecttionId, setTranjectionID] = useState("");
   const [PriceValue, setPriceValue] = useState({});
+  const [subscriberValue, setSubscriberValue] = useState(0);
   const stripe = useStripe();
   const elements = useElements();
   const { user } = UseAuth();
   const AxiosSecure = UseAxiosSecure();
-
+  const [cash, refetch] = UseBalance();
   //Order And Premium Packages Data Load
   useEffect(() => {
     if (data.state.package) {
       if (data?.state?.package === "gold") {
-        setPriceValue({ price: 2600 });
+        setSubscriberValue({ price: 2600 });
       } else if (data?.state?.package === "platinum") {
-        setPriceValue({ price: 3200 });
+        setSubscriberValue({ price: 3200 });
       } else if (data?.state?.package === "silver") {
-        setPriceValue({ price: 2200 });
+        setSubscriberValue({ price: 2200 });
       }
     } else if (data.state.price && data.state.orderId) {
       setPriceValue({ price: Number(data?.state?.price) });
     }
   }, [data]);
-
   //Backed Send Data To Strip
   useEffect(() => {
-    if (PriceValue.price > 0) {
-      AxiosSecure.post("/payment/create", PriceValue).then((res) => {
+    const priceDatas = { PriceValue, subscriberValue };
+    if (PriceValue?.price > 0 || subscriberValue?.price > 0) {
+      AxiosSecure.post("/payment/create", priceDatas).then((res) => {
         setSecretClient(res?.data?.clientSecret);
-          console.log(res?.data?.clientSecret);
       });
     }
-  }, [AxiosSecure, PriceValue]);
-
+  }, [AxiosSecure, PriceValue, subscriberValue]);
+  let insufficent = Number(cash) - Number(PriceValue?.price);
   //Form Submissions Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,7 +60,7 @@ const CheckoutForm = ({ data }) => {
     }
 
     // Use card Element with other Stripe.js APIs
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
@@ -68,7 +69,7 @@ const CheckoutForm = ({ data }) => {
       console.log("[error]", error);
       setError(error.message);
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      console.log("[PaymentMethod]");
       setError(null);
     }
 
@@ -104,7 +105,6 @@ const CheckoutForm = ({ data }) => {
             }
           ).then(() => {
             setLoading(false);
-            Swal.fire(`Payment Success!`);
           });
         }
         //Order Items
@@ -120,17 +120,40 @@ const CheckoutForm = ({ data }) => {
           await AxiosSecure.post(
             `/orders/create?email=${user?.email}`,
             OrderValue
-          ).then(() => {
+          ).then(async () => {
+            refetch();
             setLoading(false);
             Swal.fire(`Payment Success!`);
+          });
+        }
+        //Balance
+        const balanceDatas = {
+          email: user?.email,
+          taka: subscriberValue?.price,
+          txd: paymentIntent?.id,
+        };
+        if (Number(subscriberValue.price) > 0) {
+          await AxiosSecure.post(
+            `/api/balance/create?email=${user?.email}`,
+            balanceDatas
+          ).then(async (res) => {
+            if (res?.data?.insertedId) {
+              await refetch();
+              setLoading(false);
+              Swal.fire(`Payment Success!`);
+            }
           });
         }
       }
     }
   };
+
   return (
     <div>
-      {UseSectionTitle("Payment", `${PriceValue.price} Taka`)}
+      {UseSectionTitle(
+        "Payment",
+        `${PriceValue.price || subscriberValue?.price} Taka`
+      )}
       <div className="max-w-3xl mx-auto border-2 border-orange-400">
         <form onSubmit={handleSubmit} className="py-6 mx-auto">
           <CardElement
@@ -151,7 +174,7 @@ const CheckoutForm = ({ data }) => {
           />
           <button
             type="submit"
-            disabled={!stripe || !secretClient}
+            disabled={!stripe || !secretClient || insufficent < 0}
             className="flex btn bg-orange-400 disabled:opacity-50 disabled:cursor-not-allowed items-center justify-center my-8 mx-auto h-12 px-6 text-sm uppercase rounded-lg"
           >
             {loading ? (
@@ -171,6 +194,15 @@ const CheckoutForm = ({ data }) => {
                 {tranjecttionId}
               </span>
             </p>
+          )}
+          {insufficent < 0 ? (
+            <div className="text-center">
+              <span className="font-bold text-red-600 text-xl">
+                Insufficent Balance
+              </span>
+            </div>
+          ) : (
+            ""
           )}
         </form>
       </div>

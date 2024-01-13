@@ -2,13 +2,15 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import { IoIosStar } from "react-icons/io";
 import { CiStar } from "react-icons/ci";
 import UseAxiosSecure from "../../Hookes/AxiosPrivate/UseAxiosSecure";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UseAuth from "../../Hookes/AuthUser/UseAuth";
 import Swal from "sweetalert2";
 import ReviewsItemsBased from "../ReviewsItemsBased/ReviewsItemsBased";
 import HelmetHookes from "../../Hookes/ReactHelmet/Helmet";
 import UseSectionTitle from "../../Hookes/SectionTitle/UseSectionTitle";
 import UseUsersTypes from "../../Hookes/UsersType/UsersTypes";
+import { BiSolidMessageRounded } from "react-icons/bi";
+import { BiSolidLike } from "react-icons/bi";
 
 const MealsDetails = () => {
   const loader = useLoaderData();
@@ -38,22 +40,25 @@ const MealsDetails = () => {
 
     return <div>{stars}</div>;
   };
-
   //Handle Like Counts
   const handleLikeCount = (e) => {
     AxiosSecure.patch(
       `/api/meals/like/count?id=${loader._id}&email=${user?.email}`,
       {
-        likes: loader.likes + 1,
+        likes: user?.email,
       }
     ).then((res) => {
       if (res.data.modifiedCount > 0) {
-        setLike(`Loved`);
+        setLike("Liked");
         e.currentTarget.disabled = true;
       }
     });
   };
-
+  useEffect(() => {
+    if (loader?.likes?.includes(user?.email)) {
+      setLike("Liked");
+    }
+  }, [loader, user?.email]);
   //Handle Reviews
   const handleReviews = (e) => {
     setLoading(true);
@@ -173,7 +178,22 @@ const MealsDetails = () => {
               ></div>
             </div>
           </div>
-          <div className="w-full flex mt-3">
+          {/* Likes And Comment Section */}
+          <div className="my-1 flex justify-around w-2/3 text-green-600">
+            <div className="flex justify-center items-center gap-2">
+              <span className="text-blue-500 text-xl">
+                <BiSolidLike />
+              </span>
+              {loader?.likes?.length}
+            </div>
+            <div className="flex items-center justify-center gap-2 text-lg">
+              <span className="text-xl ">
+                <BiSolidMessageRounded />
+              </span>
+              {loader?.reviews}{" "}
+            </div>
+          </div>
+          <div className="w-full flex mt-2">
             <button
               onClick={handleLikeCount}
               className="px-4 border-r bg-orange-400 py-3 text-white hover:bg-gray-400 hover:text-black font-bold w-1/2"
